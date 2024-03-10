@@ -2,10 +2,14 @@ package zip.zipzoong.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.dto.MemberJoinDto;
+import zip.zipzoong.dto.MemberLoginDto;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +17,7 @@ import zip.zipzoong.dto.MemberJoinDto;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public Member join(MemberJoinDto memberJoinDto) {
         if(memberRepository.findByEmail(memberJoinDto.getEmail()).isPresent()) {
@@ -27,4 +32,16 @@ public class MemberService {
         }
 
     }
+
+    public String login(MemberLoginDto memberLoginDto) {
+        Optional<Member> loginMember = memberRepository.findByEmail(memberLoginDto.getEmail());
+        if (!loginMember.isPresent()) {
+            throw new RuntimeException("아이디 또는 비밀번호가 틀렸습니다.");
+        } else if(passwordEncoder.matches(loginMember.get().getPassword(), memberLoginDto.getPassword())) {
+            throw new RuntimeException("아이디 또는 비밀번호가 틀렸습니다.");
+        }
+
+        return "로그인 성공!";
+    }
+
 }
