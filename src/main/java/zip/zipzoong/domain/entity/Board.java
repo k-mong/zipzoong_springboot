@@ -86,11 +86,5 @@ public class Board extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    // Member 객체 안에 Board 객체를 넣어준다.
-    public void setMember(Member member) {
-        this.member = member;
-        member.getBoards().add(this);
-    }
-
 
 }
