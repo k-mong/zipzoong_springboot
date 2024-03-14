@@ -76,11 +76,8 @@ public class Board extends BaseEntity{
     @Column(nullable = false)
     private String textArea;
 
-    @OneToMany(mappedBy = "roomimage",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RoomImage> roomImages = new ArrayList<>();
-
-    @OneToMany(mappedBy = "like", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Like> likes = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
