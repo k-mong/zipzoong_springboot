@@ -21,67 +21,53 @@ public class Board extends BaseEntity{
     @Column(name = "board_id")
     private Long id;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RoomType type;
 
-    @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
     private String addressDetail;
 
-    @Column(nullable = false)
     private int roomArea;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RoomInformation roomInfo;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RentType rentType;
 
-    @Column(nullable = false)
     private int deposit;
 
-    @Column(nullable = false)
     private int month;
 
-    @Column(nullable = false)
     private boolean cost;
 
     private int roomCost;
 
-    @Column(nullable = false)
     private LocalDate datePicker;
 
-    @Column(nullable = false)
     private String totalFloor;
 
-    @Column(nullable = false)
     private String fllorsNumber;
 
-    @Column(nullable = false)
     private boolean elevator;
 
-    @Column(nullable = false)
     private boolean parking;
 
     private int parkingCost;
 
-    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
     private String textArea;
 
-    @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<RoomImage> roomImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<RoomImage> roomImages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    private String url;
 
 
 }
