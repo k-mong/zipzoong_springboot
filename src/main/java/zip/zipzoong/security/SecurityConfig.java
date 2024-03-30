@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .authorizeRequests( // 특정 url 에대한 권한 설정
                         authorize -> authorize
                                 .requestMatchers("/swagger-ui/**","/member/**").permitAll()); // 모두 허용
+
         return http.build();
     }
 

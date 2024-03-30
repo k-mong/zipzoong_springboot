@@ -1,7 +1,9 @@
 package zip.zipzoong.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
+import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.domain.entity.RentType;
 import zip.zipzoong.domain.entity.RoomInformation;
 import zip.zipzoong.domain.entity.RoomType;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@AllArgsConstructor
 public class InsertBoardDto {
     private RoomType roomType;
     private String address;
@@ -29,6 +32,7 @@ public class InsertBoardDto {
     private int parkingCost;
     private String title;
     private String textArea;
+    private Member member;
     private List<MultipartFile> files;
 
 }

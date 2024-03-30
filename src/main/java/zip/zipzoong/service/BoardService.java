@@ -6,17 +6,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.domain.entity.Board;
+import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.domain.entity.RoomImage;
 import zip.zipzoong.domain.repository.BoardRepository;
+import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.domain.repository.RoomImageRepository;
 import zip.zipzoong.dto.InsertBoardDto;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,15 +23,17 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final RoomImageRepository roomImageRepository;
+    private final MemberRepository memberRepository;
 
     @Value("${file.boardImagePath}")
     private String uploadFolder;
 
-    public Board createBoard(InsertBoardDto insertBoardDto) {
-        String roomImage = insertImage(insertBoardDto);
+    public String createBoard(InsertBoardDto insertBoardDto, String memberId) {
+        List<RoomImage> roomImage = insertImage(insertBoardDto);
 
+        Member member = memberRepository.findByEmail(memberId).get();
 
-        return boardRepository.save(
+        boardRepository.save(
                 Board.builder()
                         .type(insertBoardDto.getRoomType())
                         .address(insertBoardDto.getAddress())
@@ -52,20 +53,23 @@ public class BoardService {
                         .parkingCost(insertBoardDto.getParkingCost())
                         .title(insertBoardDto.getTitle())
                         .textArea(insertBoardDto.getTextArea())
-//                        .roomImages(roomImage)
-                        .url(roomImage)
+                        .url(roomImage.toString())
+                        .member(member)
                         .build());
+
+
+        return "게시글 등록 완료!";
     }
 
     @Transactional
-    public String insertImage(InsertBoardDto insertBoardDto) {
+    public List<RoomImage> insertImage(InsertBoardDto insertBoardDto) {
         List<RoomImage> roomImages = new ArrayList<>();
 
         if(insertBoardDto.getFiles() != null && !insertBoardDto.getFiles().isEmpty()) {
             //만약 이미지파일이 있고, 이미지파일이 비어있지 않다면
 
             if(insertBoardDto.getFiles().size() > 7 ) {
-                throw new RuntimeException("이미지는 최대 6개까지 가능합니다.");
+                throw new RuntimeException("이미지는 최대 7개까지 가능합니다.");
             }
 
             for (MultipartFile file : insertBoardDto.getFiles()) {
@@ -93,8 +97,9 @@ public class BoardService {
                 roomImages.add(image);
             }
         }
-            return "이미지 등록 완료";
+        return roomImages;
     }
+
 
 
 
