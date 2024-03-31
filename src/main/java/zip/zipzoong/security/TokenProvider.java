@@ -57,7 +57,7 @@ public class TokenProvider {
                 .compact();
     }
 
-    public String checkToken(String refreshToken) {
+    public String checkRefreshToken(String refreshToken) {
         if(checkValidToken(refreshToken)) { // refreshToken 이 유효하면 true 아니면 false
             String userId = getUserId(refreshToken);
             return generationToken(userId);

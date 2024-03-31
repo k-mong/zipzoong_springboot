@@ -100,6 +100,18 @@ public class BoardService {
         return roomImages;
     }
 
+    public String deleteBoard(Long boardId, String memberId) {
+        Member findMember = memberRepository.findByEmail((memberId))
+                .orElseThrow(()-> new RuntimeException("존재하지 않는 회원입니다."));
+
+        Board board = boardRepository.findByIdAndMember(boardId, findMember)
+                .orElseThrow(()->new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        boardRepository.delete(board);
+
+        return "게시글이 삭제됐습니다.";
+
+    }
 
 
 
