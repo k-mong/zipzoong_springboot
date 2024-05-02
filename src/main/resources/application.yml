@@ -4,6 +4,27 @@ spring:
       ddl-auto: create
   #    show-sql: true
 
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: [요약 정보 탭 > 앱 키 에서 확인 가능한 REST API 키]
+            client-secret: [보안 탭에서 확인 가능한 Client Secret 코드]
+            scope:
+              - profile_nickname
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/kakao/callback
+            client-name: Kakao
+            client-authentication-method: client_secret_post
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:  jdbc:mysql://localhost:3306/zip?serverTimeZone=UTC&characterEncoding=UTF-8
@@ -21,3 +42,4 @@ jwt:
 
 file:
   boardImagePath: /path/to/board/images
+
