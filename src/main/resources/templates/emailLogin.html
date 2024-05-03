@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="../static/css/kakaoLogin.css">
+    <title>이메일로그인</title>
+    <link rel="stylesheet" href="../static/css/emailLogin.css">
 </head>
 <body>
 <div class="top-wrapper">
@@ -17,17 +17,14 @@
                 <div>다양한 서비스를 즐기세요</div>
             </div>
 
-                <a id="moveLoginBtn" class="kakao-btn" href="/oauth2/authorization/kakao">카카오 로그인</a>
+            <div class="login-wrapper">
+                <input type="text" name="email" placeholder="  이메일 주소"><br>
+                <input type="password" name="password" placeholder="  비밀번호">
+            </div>
         </div>
 
-        <div class="start-email">이메일로 시작하기</div>
+        <input type="submit" class="loginBtn" value="시작하기">
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $('#moveLoginBtn').click(function () {
-        window.location.href = '/view/user/login';
-    });
-</script>
 </body>
 </html>

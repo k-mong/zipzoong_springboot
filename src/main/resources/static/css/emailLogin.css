@@ -21,7 +21,7 @@
 
 /* 이미지 스타일 */
 .wrapper img {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     width: 200px;
 }
 
@@ -49,27 +49,40 @@
     font-weight: bold;
 }
 
-.kakao-btn {
-    width: 265px;
-    height: 38px;
+.loginBtn {
+    width: 317px;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffeb00; /* 카카오 로그인 버튼의 배경색 */
-    color: #000; /* 텍스트 색상 */
-    text-decoration: none; /* 밑줄 제거 */
-    border-radius: 12px; /* 모서리를 둥글게 */
+    background-color: #0BB3FB; /* 카카오 로그인 버튼의 배경색 */
+    color: #ffff; /* 텍스트 색상 */
+    border-radius: 8px; /* 모서리를 둥글게 */
     font-size: 16px; /* 폰트 크기 */
-    font-weight: bold; /* 폰트 굵기 */
-
-}
-
-.kakao-btn:hover {
-    background-color: #ffe100; /* 마우스 호버 시 배경색 변경 */
-    color: #000; /* 텍스트 색상 */
-}
-
-.start-email {
-    font-size: 12px;
+    border: 0;
     cursor: pointer;
+}
+
+.loginBtn:hover {
+    background-color: #0AA9ED; /* 카카오 로그인 버튼의 배경색 */
+    color: #ffff; /* 텍스트 색상 */
+}
+
+.login-wrapper {
+
+}
+
+.login-wrapper input:first-child {
+    margin-bottom: 10px;
+    width: 317px;
+    height: 45px;
+    border-radius: 8px; /* 모서리를 둥글게 */
+    border: 2px solid #f0f0f0; /* 연한 회색 테두리 */
+}
+
+.login-wrapper input:last-child {
+    width: 317px;
+    height: 45px;
+    border-radius: 8px; /* 모서리를 둥글게 */
+    border: 2px solid #f0f0f0; /* 연한 회색 테두리 */
 }
