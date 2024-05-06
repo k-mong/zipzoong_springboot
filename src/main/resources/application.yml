@@ -25,6 +25,7 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:  jdbc:mysql://localhost:3306/zip?serverTimeZone=UTC&characterEncoding=UTF-8

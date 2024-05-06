@@ -5,7 +5,7 @@
     height: 100vh;
     display: flex; /* Flexbox를 사용 */
     justify-content: center; /* 내용을 세로 중앙에 배치 */
-    align-items: center; /* 내용을 가로 중앙에 배치 */
+    align-items: center; /* 내용을 세로 중앙에 배치 */
 }
 .wrapper {
     width: 350px; /* 가로 크기 */
@@ -73,3 +73,4 @@
     font-size: 12px;
     cursor: pointer;
 }
+

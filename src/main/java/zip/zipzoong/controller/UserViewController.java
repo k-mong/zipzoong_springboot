@@ -19,7 +19,8 @@ public class UserViewController {
     }
 
     @GetMapping("/")
-    public String indes() {
+    public String index() {
+        System.out.println("들어옴");
         return "index";
     }
 }
