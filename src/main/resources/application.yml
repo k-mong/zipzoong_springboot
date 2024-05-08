@@ -25,13 +25,17 @@ spring:
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
 
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url:  jdbc:mysql://localhost:3306/zip?serverTimeZone=UTC&characterEncoding=UTF-8
     username: root
     password: 12345678
-
+  thymeleaf:
+    check-template-location: true
+    suffix: .html
+    cache: false
+  mvc:
+    static-path-pattern: "/static/**"
 #sql 쿼리문 표시
 logging:
   level:

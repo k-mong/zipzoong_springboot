@@ -15,7 +15,7 @@ public class UserViewController {
 
     @GetMapping("/kakao")
     public String showKakaoLogin() {
-        return "kakaoLoigin";
+        return "kakaoLogin";
     }
 
     @GetMapping("/")
@@ -23,4 +23,10 @@ public class UserViewController {
         System.out.println("들어옴");
         return "index";
     }
+
+    @GetMapping("/header")
+    public String header() {
+        return "common/header";
+    }
+
 }

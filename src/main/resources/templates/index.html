@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
-<!--<th:block th:replace="~{templates/common/header.html :: header}"></th:block>-->
 <!-- 지도를 표시할 div 입니다 -->
+<div id="header"></div>
 <div id="map" style="width:80%;height:350px;"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b7d2b17b0b31f160b34d7bf533c7e9fb"></script>
@@ -21,7 +20,11 @@
     // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
+    $(document).ready(function () {
+        $("#header").load("/header")
+    })
 
 </script>
+
 </body>
 </html>
