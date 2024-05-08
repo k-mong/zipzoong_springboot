@@ -2,10 +2,8 @@ package zip.zipzoong.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.dto.MemberJoinDto;
 import zip.zipzoong.dto.MemberLoginDto;
@@ -24,9 +22,11 @@ public class MemberController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/join")
-    public ResponseEntity<Member> join(@RequestBody MemberJoinDto memberJoinDto) {    // HTTP응답을 나타내는 클래스 <Body의 타입>
-        Member result = memberService.join(memberJoinDto);
-        return ResponseEntity.ok(result);   // 200번 코드와 resul 를 반환
+    public ModelAndView join(@ModelAttribute MemberJoinDto memberJoinDto) {    // HTTP응답을 나타내는 클래스 <Body의 타입>
+        memberService.join(memberJoinDto);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("join");
+        return modelAndView;
     }
 
     @PostMapping("/login")

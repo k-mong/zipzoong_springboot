@@ -41,6 +41,7 @@
 .loginBtn {
     color: gray;
     font-size: 0.9rem;
+    cursor: pointer;
 }
 
 /*SEARCH-BAR*/

@@ -24,9 +24,15 @@ public class UserViewController {
         return "index";
     }
 
+    @GetMapping("/join")
+    public String showJoin() {
+        return "join";
+    }
+
     @GetMapping("/header")
-    public String header() {
+    public String showHeader() {
         return "common/header";
     }
+
 
 }

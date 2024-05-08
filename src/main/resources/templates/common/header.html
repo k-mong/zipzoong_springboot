@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../../static/css/header.css">
+    <link rel="stylesheet" type="text/css" th:href="@{../static/css/header.css}">
 </head>
 <body>
 <div class="top-wrapper">
@@ -30,13 +31,13 @@
             <img src="../../static/images/돋보기.png">
         </button>
     </div>
-<!--    <div class="loginBtn">-->
-<!--        로그인-->
-<!--    </div>-->
-    <div class="userWrap">
+    <div id="moveLoginBtn" class="loginBtn">
+        로그인
+    </div>
+    <div id="userZone" class="userWrap">
         <div class="userName">
             <img src="../../static/images/useImg.png"/>
-            <span>김홍준님</span>
+            <span type="text" id="memberNick" th:value="${memberNick}"></span>
         </div>
         <div class="dropDown-box">
             <a>마이페이지</a>
@@ -45,7 +46,18 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var memberNick = $("#memberNick").val();
 
+
+
+        $('#moveLoginBtn').click(function () {
+           window.location.href = "kakao"
+        });
+    });
+</script>
 
 </body>
 </html>

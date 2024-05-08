@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>이메일로그인</title>
     <link rel="stylesheet" href="../static/css/emailLogin.css">
+    <link rel="stylesheet" type="text/css" th:href="@{../static/css/emailLogin.css}">
 </head>
 <body>
 <div class="top-wrapper">
@@ -23,10 +24,16 @@
             </div>
         </div>
 
+        <div id="moveJoinBtn" class="start-join">회원가입</div>
+
         <input type="submit" class="loginBtn" value="시작하기">
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#moveJoinBtn').click(function () {
+        window.location.href = 'join';
+    });
 
 </script>
 </body>
