@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.dto.MemberJoinDto;
 import zip.zipzoong.dto.MemberLoginDto;
@@ -21,12 +22,13 @@ public class MemberController {
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
 
+
     @PostMapping("/join")
-    public ModelAndView join(@ModelAttribute MemberJoinDto memberJoinDto) {    // HTTP응답을 나타내는 클래스 <Body의 타입>
+    public RedirectView join(@ModelAttribute MemberJoinDto memberJoinDto) {
         memberService.join(memberJoinDto);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("join");
-        return modelAndView;
+        return new RedirectView("/");
     }
 
     @PostMapping("/login")

@@ -7,20 +7,22 @@
     <link rel="stylesheet" type="text/css" th:href="@{../static/css/join.css}">
 </head>
 <body>
-<div class="top-wrapper">
-    <div class="wrapper">
-        <div class="text-wrapper">
-            <div>간편하게 로그인하고</div>
-            <div>다양한 서비스를 즐기세요</div>
-        </div>
+<form method="post" th:action="@{member/join}">
+    <div class="top-wrapper">
+        <div class="wrapper">
+            <div class="text-wrapper">
+                <div>간편하게 로그인하고</div>
+                <div>다양한 서비스를 즐기세요</div>
+            </div>
 
-        <div class="join-wrapper">
-            <input type="text" name="email" id="email" placeholder="이메일 주소"><br>
-            <input type="password" name="password" id="password" placeholder="비밀번호">
-        </div>
+            <div class="join-wrapper">
+                <input type="text" name="email" id="email" placeholder="이메일 주소"><br>
+                <input type="password" name="password" id="password" placeholder="비밀번호">
+            </div>
 
-        <button type="submit" class="joinBtn" value="join">회원가입</button>
+            <button type="submit" class="joinBtn" value="join">회원가입</button>
+        </div>
     </div>
-</div>
+</form>
 </body>
 </html>
