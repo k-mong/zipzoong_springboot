@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>>login(MemberLoginDto memberLoginDto) {
+    public RedirectView login(@ModelAttribute MemberLoginDto memberLoginDto) {
         String token = tokenProvider.generationToken(memberLoginDto.getEmail());
         String refreshToken = tokenProvider.generateRefreshToken(memberLoginDto);
         String result = memberService.login(memberLoginDto);
@@ -41,7 +41,11 @@ public class MemberController {
         response.put("token", token);
         response.put("refreshToken", refreshToken);
         response.put("result", result);
-        return ResponseEntity.ok(response);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("emailLogin");
+        modelAndView.addObject("memberNick", memberLoginDto.getEmail());
+        return new RedirectView("/");
     }
 
 }

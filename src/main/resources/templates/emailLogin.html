@@ -7,28 +7,32 @@
     <link rel="stylesheet" type="text/css" th:href="@{../static/css/emailLogin.css}">
 </head>
 <body>
-<div class="top-wrapper">
-    <div class="wrapper">
-        <div class="middle-wrapper">
-            <img src="../static/images/집보는중m.png">
+<form method="post" th:action="@{member/login}">
+    <div class="top-wrapper">
+        <div class="wrapper">
+            <div class="middle-wrapper">
+                <img src="../static/images/집보는중m.png">
 
 
-            <div class="text-wrapper">
-                <div>간편하게 로그인하고</div>
-                <div>다양한 서비스를 즐기세요</div>
+                <div class="text-wrapper">
+                    <div>간편하게 로그인하고</div>
+                    <div>다양한 서비스를 즐기세요</div>
+                </div>
+
+                <div class="login-wrapper">
+                    <input type="text" name="email" placeholder="  이메일 주소"><br>
+                    <input type="password" name="password" placeholder="  비밀번호">
+                </div>
             </div>
 
-            <div class="login-wrapper">
-                <input type="text" name="email" placeholder="  이메일 주소"><br>
-                <input type="password" name="password" placeholder="  비밀번호">
-            </div>
+            <div id="moveJoinBtn" class="start-join">회원가입</div>
+
+            <input type="submit" class="loginBtn" value="시작하기">
         </div>
-
-        <div id="moveJoinBtn" class="start-join">회원가입</div>
-
-        <input type="submit" class="loginBtn" value="시작하기">
     </div>
-</div>
+
+</form>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $('#moveJoinBtn').click(function () {
@@ -36,5 +40,6 @@
     });
 
 </script>
+
 </body>
 </html>
