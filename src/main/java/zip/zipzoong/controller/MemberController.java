@@ -1,7 +1,9 @@
 package zip.zipzoong.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -25,6 +27,7 @@ public class MemberController {
 
     @PostMapping("/join")
     public RedirectView join(@ModelAttribute MemberJoinDto memberJoinDto) {
+        System.out.println("join 요청");
         memberService.join(memberJoinDto);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("join");
@@ -32,7 +35,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public RedirectView login(@ModelAttribute MemberLoginDto memberLoginDto) {
+    public RedirectView login(@ModelAttribute MemberLoginDto memberLoginDto, HttpSession session, Model model) {
+        System.out.println("login 요청 들어옴");
         String token = tokenProvider.generationToken(memberLoginDto.getEmail());
         String refreshToken = tokenProvider.generateRefreshToken(memberLoginDto);
         String result = memberService.login(memberLoginDto);
@@ -42,9 +46,10 @@ public class MemberController {
         response.put("refreshToken", refreshToken);
         response.put("result", result);
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("emailLogin");
-        modelAndView.addObject("memberNick", memberLoginDto.getEmail());
+        session.setAttribute("memberNick", memberLoginDto.getEmail());
+        model.addAttribute("memberNick", memberLoginDto.getEmail());
+
+        System.out.println(memberLoginDto.getEmail());
         return new RedirectView("/");
     }
 

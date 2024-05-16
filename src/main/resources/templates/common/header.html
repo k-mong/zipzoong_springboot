@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -37,7 +37,8 @@
     <div id="userZone" class="userWrap">
         <div class="userName">
             <img src="../../static/images/useImg.png"/>
-            <span type="text" id="memberNick" th:value="${memberNick}">님 안녕하세요</span>
+            <input type="text" id="memberNick" th:value="${memberNick}" readonly/>
+            <span th:text="${memberNick}">님 안녕하세요</span>
         </div>
         <div class="dropDown-box">
             <a>마이페이지</a>
@@ -51,7 +52,13 @@
     $(document).ready(function () {
         var memberNick = $("#memberNick").val();
 
-
+        if(memberNick != '') {  // memberNick 이 값이 있다면(로그인이 됐다면)
+            $("#moveLoginBtn").hide();
+            $("#userZone").show();
+        } else {
+            $("#moveLoginBtn").show();
+            $("#userZone").hide();
+        }
 
         $('#moveLoginBtn').click(function () {
            window.location.href = "kakao"

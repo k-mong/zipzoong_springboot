@@ -1,7 +1,9 @@
 package zip.zipzoong.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -30,7 +32,10 @@ public class UserViewController {
     }
 
     @GetMapping("/header")
-    public String showHeader() {
+    public String showHeader(HttpSession session, Model model) {
+        System.out.println("header 요청 들어옴");
+        String memberNick = (String) session.getAttribute("memberNick");
+        model.addAttribute("memberNick", memberNick);
         return "common/header";
     }
 
