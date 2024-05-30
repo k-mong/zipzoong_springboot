@@ -15,14 +15,12 @@
                 원룸
             </span>
             <span class="text">
-                원룸
+                투룸
             </span>
-            <span class="text">
-                원룸
+            <span class="text" id="moveCreateBoard">
+                내집 내놓기
             </span>
-            <span class="text">
-                원룸
-            </span>
+
         </div>
     </div>
     <div class="searchBox">
@@ -37,8 +35,8 @@
     <div id="userZone" class="userWrap">
         <div class="userName">
             <img src="../../static/images/useImg.png"/>
-            <input type="text" id="memberNick" th:value="${memberNick}" readonly/>
-            <span th:text="${memberNick}">님 안녕하세요</span>
+            <input type="hidden" id="memberNick" th:value="${memberNick}" readonly/>
+            <span th:text="${memberNick} + ' 님 안녕하세요'"></span>
         </div>
         <div class="dropDown-box">
             <a>마이페이지</a>
@@ -63,6 +61,11 @@
         $('#moveLoginBtn').click(function () {
            window.location.href = "kakao"
         });
+
+        $('#moveCreateBoard').click(function () {
+            window.location.href = "createBoard"
+        });
+
     });
 </script>
 

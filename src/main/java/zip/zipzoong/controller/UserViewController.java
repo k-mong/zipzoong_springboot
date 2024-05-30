@@ -39,5 +39,9 @@ public class UserViewController {
         return "common/header";
     }
 
+    @GetMapping("/createBoard")
+    public String createBoard() {
+        return "member/createBoard";
+    }
 
 }

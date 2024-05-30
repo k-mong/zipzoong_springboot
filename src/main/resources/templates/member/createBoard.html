@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="header"></div>
+<form method="post" th:action="@{member/createBoard}">
+
+</form>
+<div>
+    <div class="addressZone">
+        <label>주소 검색</label>
+        <input type="text" class="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()"><br>
+        <input type="text" class="addressDetail" placeholder="상세주소 입력">
+    </div>
+
+</div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function findAddr() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+            }
+        }).open();
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+         $("#header").load("/header");
+     });
+</script>
+</body>
+</html>
