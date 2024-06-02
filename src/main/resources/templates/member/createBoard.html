@@ -3,53 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/createBoard.css">
 </head>
 <body>
 <div id="header"></div>
-<label>내집 내놓기</label>
-<ul>
-    <li>전/월세 매물만 등록할 수 있습니다.</li>
-    <li>임대인과 퇴실 협의 후 작성해 주시길 바랍니다.</li>
-    <li>내놓으시려는 집의 계약서를 참고하시며 작성하시면 원활하게 작성 가능합니다.</li>
-    <li>본인 명이의 계약이 된 집이 아닌경우 계약 명의자의 출석이 요구될 수 있습니다.</li>
-    <li>금액 및 옵션을 정확한 정보를 입력 바랍니다.</li>
-</ul>
-<form method="post" th:action="@{member/createBoard}">
+<div class="wrap">
+    <div class="all_wrapper">
+    <label class="title">내집 내놓기</label>
+    <ul>
+        <li>전/월세 매물만 등록할 수 있습니다.</li>
+        <li>임대인과 퇴실 협의 후 작성해 주시길 바랍니다.</li>
+        <li>내놓으시려는 집의 계약서를 참고하시며 작성하시면 원활하게 작성 가능합니다.</li>
+        <li>본인 명이의 계약이 된 집이 아닌경우 계약 명의자의 출석이 요구될 수 있습니다.</li>
+        <li>금액 및 옵션을 정확한 정보를 입력 바랍니다.</li>
+    </ul>
+    <form method="post" th:action="@{member/createBoard}" class="form_wrapper">
+        <div>
+            <label>매물 유형</label>
+            <div>
+                <input type="radio" id="roomType_one" name='roomType' value='one'/>
+                <label for="roomType_one">원룸</label>
+            </div>
+            <div>
+                <input type="radio" id="roomType_two" name='roomType' value='two'/>
+                <label for="roomType_two">투룸</label>
+            </div>
+        </div>
 
-</form>
-<div>
-    <label>매물 유형</label>
-    <div>
-        <input type="checkbox" id="roomType_one" name='roomType' value='one' onclick='checkOnlyOne(this)'/>
-        <label for="roomType_one">원룸</label>
-    </div>
-    <div>
-        <input type="checkbox" id="roomType_two" name='roomType' value='two' onclick='checkOnlyOne(this)'/>
-        <label for="roomType_two">투룸</label>
+        <div>
+            <label>매물 주소</label>
+            <div class="addressZone">
+                <label>주소 검색</label>
+                <div>
+                    <input type="text" class="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()">
+                    <button onclick="findAddr()">검색</button>
+                </div>
+                <input type="text" class="addressDetail" placeholder="상세주소 입력">
+            </div>
+        </div>
+
+        <div>
+            <label>방 정보</label>
+            <div>
+                <div>전용면적</div>
+                <div>
+                    <div>
+                        <input type="number" placeholder="평수 입력">
+                        <span>평</span>
+                    </div>
+                    <div>
+                        <input type="radio" id="roomInfo_open" value="open">
+                        <label for="roomInfo_open">오픈형</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="roomInfo_detachable" value="detachable">
+                        <label for="roomInfo_detachable">분리형</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="roomInfo_layer" value="layer">
+                        <label for="roomInfo_layer">복층형</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label>거래 종류</label>
+            <div>
+                <input type="radio" id="rentType_M" name='rentType' value='month'/>
+                <label for="rentType_M">월세</label>
+            </div>
+            <div>
+                <input type="radio" id="rentType_Y" name='rentType' value='year'/>
+                <label for="rentType_Y">전세</label>
+            </div>
+        </div>
+
+
+    </form>
     </div>
 </div>
-
-<div>
-    <div class="addressZone">
-        <label>주소 검색</label>
-        <input type="text" class="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()"><br>
-        <input type="text" class="addressDetail" placeholder="상세주소 입력">
-    </div>
-
-</div>
-
-<div>
-    <label>거래 종류</label>
-    <div>
-        <input type="checkbox" id="rentType_M" name='rentType' value='month' onclick='checkOnlyOne(this)'/>
-        <label for="roomType_one">월세</label>
-    </div>
-    <div>
-        <input type="checkbox" id="rentType_Y" name='rentType' value='year' onclick='checkOnlyOne(this)'/>
-        <label for="roomType_two">전세</label>
-    </div>
-</div>
-
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function findAddr() {
@@ -65,18 +98,10 @@
 <script>
     $(document).ready(function () {
          $("#header").load("/header");
+
+
      });
 
-    function checkOnlyOne(element) {
-        const checkboxes = $("input[name='roomType']");
-        const checkboxes2 = $("input[name='rentType']");
-
-        checkboxes.prop('checked', false);
-        $(element).prop('checked', true);
-
-        checkboxes2.prop('checked', false);
-        $(element).prop('checked', true);
-    }
 </script>
 </body>
 </html>

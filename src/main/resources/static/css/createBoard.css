@@ -1,0 +1,33 @@
+.wrap {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.all_wrapper {
+    padding: 60px 0;
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+.title {
+    margin-bottom: 70px;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+ul {
+    width: 100%;
+    font-weight: 700;
+}
+
+.form_wrapper {
+    border: 1px solid gray;
+    width: 100%;
+
+}
