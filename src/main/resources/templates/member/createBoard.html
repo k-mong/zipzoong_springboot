@@ -18,23 +18,25 @@
         <li>금액 및 옵션을 정확한 정보를 입력 바랍니다.</li>
     </ul>
     <form method="post" th:action="@{member/createBoard}" class="form_wrapper">
-        <div>
-            <label>매물 유형</label>
-            <div>
-                <input type="radio" id="roomType_one" name='roomType' value='one'/>
-                <label for="roomType_one">원룸</label>
-            </div>
-            <div>
-                <input type="radio" id="roomType_two" name='roomType' value='two'/>
-                <label for="roomType_two">투룸</label>
+        <div class="roomType_wrap">
+            <label class="title_label">매물 유형</label>
+            <div class="roomType_radio">
+                <div>
+                    <input type="radio" id="roomType_one" name='roomType' value='one'/>
+                    <label for="roomType_one">원룸</label>
+                </div>
+                <div>
+                    <input type="radio" id="roomType_two" name='roomType' value='two'/>
+                    <label for="roomType_two">투룸</label>
+                </div>
             </div>
         </div>
 
-        <div>
-            <label>매물 주소</label>
+        <div class="address_wrap">
+            <label class="title_label">매물 주소</label>
             <div class="addressZone">
                 <label>주소 검색</label>
-                <div>
+                <div class="addressZone_input">
                     <input type="text" class="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()">
                     <button onclick="findAddr()">검색</button>
                 </div>
@@ -52,15 +54,15 @@
                         <span>평</span>
                     </div>
                     <div>
-                        <input type="radio" id="roomInfo_open" value="open">
+                        <input type="radio" id="roomInfo_open" name="roomInfo" value="open">
                         <label for="roomInfo_open">오픈형</label>
                     </div>
                     <div>
-                        <input type="radio" id="roomInfo_detachable" value="detachable">
+                        <input type="radio" id="roomInfo_detachable" name="roomInfo" value="detachable">
                         <label for="roomInfo_detachable">분리형</label>
                     </div>
                     <div>
-                        <input type="radio" id="roomInfo_layer" value="layer">
+                        <input type="radio" id="roomInfo_layer" name="roomInfo" value="layer">
                         <label for="roomInfo_layer">복층형</label>
                     </div>
                 </div>
@@ -77,6 +79,132 @@
                 <input type="radio" id="rentType_Y" name='rentType' value='year'/>
                 <label for="rentType_Y">전세</label>
             </div>
+        </div>
+
+        <div>
+            <label>가격 정보</label>
+            <div>
+                <div>
+                    <span>보증금</span>
+                    <div>
+                        <input type="number" value="deposit"/>
+                        <span>만원</span>
+                    </div>
+                </div>
+
+                <div>
+                    <span>월세</span>
+                    <div>
+                        <input type="number" value="month"/>
+                        <span>만원</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <span>관리비 여부</span>
+                <input type="radio" name="radio" id="r2" value="0"><label for="r2">없음</label>
+                <input type="radio" name="radio" id="r1" value="1" checked><label for="r1">있음</label>
+                <div>
+                    <input type="number" name="number"/>
+                    <span>만원</span>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label>입주 가능 일자</label>
+            <input type="radio" name="datePicker" id="date1" value="0"><label for="date1">즉시 입주</label>
+            <input type="radio" name="datePicker" id="date2" value="1" checked><label for="date2">일자 선택</label>
+            <div>
+                <input type="date" name="date"/>
+                <span>만원</span>
+            </div>
+        </div>
+
+        <div>
+            <label>층 수</label>
+            <div>
+                <span>전체 층 수</span>
+                <select name="totalFloor">
+                    <option value="">선택</option>
+                    <option value="1">1층</option>
+                    <option value="2">2층</option>
+                    <option value="3">3층</option>
+                    <option value="4">4층</option>
+                    <option value="5">5층</option>
+                    <option value="6">6층</option>
+                    <option value="7">7층</option>
+                    <option value="8">8층</option>
+                    <option value="9">9층</option>
+                </select>
+            </div>
+            <div>
+                <span>해당 층 수</span>
+                <select name="fllorsNumber">
+                    <option value="">선택</option>
+                    <option value="1">1층</option>
+                    <option value="2">2층</option>
+                    <option value="3">3층</option>
+                    <option value="4">4층</option>
+                    <option value="5">5층</option>
+                    <option value="6">6층</option>
+                    <option value="7">7층</option>
+                    <option value="8">8층</option>
+                    <option value="9">9층</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label>추가 정보</label>
+            <div>
+                <span>엘리베이터</span>
+                <div>
+                    <input type="radio" id="elevator_false" name='elevator' value='false'/>
+                    <label for="elevator_false">없음</label>
+                </div>
+                <div>
+                    <input type="radio" id="elevator_true" name='elevator' value='true'/>
+                    <label for="elevator_true">있음</label>
+                </div>
+            </div>
+
+            <div>
+                <span>주차 가능 여부</span>
+                <input type="radio" name="parking" id="parking1" value="0"><label for="parking1">불가능</label>
+                <input type="radio" name="parking" id="parking2" value="1" checked><label for="parking2">가능</label>
+                <div>
+                    <input type="number" name="number"/>
+                    <span>만원</span>
+                </div>
+            </div>
+
+            <div>
+                <span>옵션</span>
+                <div>
+                    <input type="checkbox" id="fridge" value="fridge">
+                    <label for="fridge">냉장고</label>
+                    <input type="checkbox" id="washer" value="washer">
+                    <label for="washer">세탁기</label>
+                    <input type="checkbox" id="air_conditioner" value="air_conditioner">
+                    <label for="air_conditioner">에어컨</label>
+                    <input type="checkbox" id="oven" value="oven">
+                    <label for="oven">전자렌지</label>
+                    <input type="checkbox" id="closet" value="closet">
+                    <label for="closet">옷장</label>
+                    <input type="checkbox" id="desk" value="desk">
+                    <label for="desk">책상</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filebox clearfix">
+            <div class="inputFile">
+                <label for="AddImgs" class="addImgBtn">사진 등록</label>
+                <input type="file" id="AddImgs" class="upload-hidden" accept=".jpg, .png, .gif" multiple>
+            </div>
+            <ul id="Preview" class="sortable"></ul>
         </div>
 
 
@@ -99,8 +227,40 @@
     $(document).ready(function () {
          $("#header").load("/header");
 
+        $("input:radio[name=radio]").click(function(){
+
+            if($("input[name=radio]:checked").val() == "1"){
+                $("input[name=number]").attr("disabled",false);
+                // radio 버튼의 value 값이 1이라면 활성화
+
+            }else if($("input[name=radio]:checked").val() == "0"){
+                $("input[name=number]").attr("disabled",true);
+                // radio 버튼의 value 값이 0이라면 비활성화
+            }
+        });
+
+        $("input:radio[name=datePicker]").click(function () {
+            if($("input[name=datePicker]:checked").val() == "1") {
+                $("input[name=date]").attr("disabled", false);
+
+            }else if($("input[name=datePicker]:checked").val() == "0") {
+                $("input[name=date]").attr("disabled",true);
+            }
+        });
+
+        $("input:radio[name=parking]").click(function () {
+            if($("input[name=parking]:checked").val() == "1") {
+                $("input[name=number]").attr("disabled",false);
+            }else if($("input[name=parking]:checked").val() == "0") {
+                $("input[name=number]").attr("disabled",true);
+            }
+        })
+
+
 
      });
+
+
 
 </script>
 </body>
