@@ -23,8 +23,8 @@ public class RoomImage {
 
     private LocalDateTime createdAt;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "board_id")
-//    private Board board;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
 
 }

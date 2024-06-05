@@ -29,6 +29,7 @@ public class BoardService {
     private String uploadFolder;
 
     public String createBoard(InsertBoardDto insertBoardDto, String memberId) {
+        System.out.println("createBoard 실행");
         List<RoomImage> roomImage = insertImage(insertBoardDto);
 
         Member member = memberRepository.findByEmail(memberId).get();

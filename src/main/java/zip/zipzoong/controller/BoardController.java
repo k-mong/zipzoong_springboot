@@ -19,6 +19,7 @@ public class BoardController {
     @PostMapping("/create")
     public ResponseEntity<String> insertBoard(InsertBoardDto insertBoardDto,
                                               @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
+        System.out.println("createBoard 실행");
         String newAccessToken = token; // 기본적으로는 받은 액세스 토큰을 사용
         if(!tokenProvider.checkValidToken(token)){  // 액세스토큰이 만료되면 리프레시토큰을 검사해서 유효한지 체크
             newAccessToken = tokenProvider.checkRefreshToken(refreshToken);

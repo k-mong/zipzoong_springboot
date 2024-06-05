@@ -25,15 +25,21 @@ ul {
     font-weight: 700;
 }
 
-.form_wrapper {
-    border: 1px solid gray;
+.register_form{
     width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 
+.form_wrapper {
+    border: 1px solid #d9d9d9;
+    width: 100%;
 }
 
 .roomType_wrap {
     display: flex;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #d9d9d9;
     height: 70px;
 }
 
@@ -46,7 +52,7 @@ ul {
 
 .address_wrap {
     display: flex;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #d9d9d9;
     width: 100%;
     height: 100%;
 }
@@ -56,9 +62,14 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid gray;
+    border-right: 1px solid #d9d9d9;
     min-width: 180px;
     font-weight: 700;
+}
+
+/* subtitle style */
+.subtitle {
+    font-weight: 600;
 }
 
 .addressZone {
@@ -69,10 +80,6 @@ ul {
     width: 100%;
     margin-left: 15px;
     padding: 20px 0;
-}
-
-.addressZone label {
-    font-weight: 600;
 }
 
 .addressZone input {
@@ -95,6 +102,300 @@ ul {
     border: none;
     background-color: black;
     color: #f0f0f0;
+}
+
+.roomInfo_wrap {
+    display: flex;
+    border-bottom: 2px solid gray;
+}
+
+.roomInfo_content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.roomInfoZone {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.roomInfo_radio {
+    display: flex;
+    width: 70%;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.roomInfo_input {
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 30px;
+    align-items: center;
+    width: 120px;
+    padding: 0 5px;
+}
+
+
+.roomInfo_input input {
+    border: none;
+    width: 100%;
+}
+
+.rentType_wrap {
+    display: flex;
+    border-bottom: 1px solid #d9d9d9;
+    width: 100%;
+    height: 70px;
+}
+
+.rentType_radio {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+/*roomCost*/
+.roomCost_wrap {
+    display: flex;
+    border-bottom: 1.5px solid gray;
+    width: 100%;
+    height: 160px;
+}
+
+.roomCost_contents{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    margin: 0 15px;
+}
+
+.roomCost_input {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.roomCost_input div{
+    margin-right: 20px;
+}
+
+.roomCost_input input {
+    border: none;
+    width: 70%;
+}
+
+.roomCost_pay {
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 30px;
+    align-items: center;
+    width: 120px;
+    padding: 0 5px;
+}
+
+.roomCost_radio{
+    display: flex;
+    flex-direction: column;
+}
+
+.roomCost_radio_wrap {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.roomCost_cost_wrap {
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 30px;
+    align-items: center;
+    width: 120px;
+    padding: 0 5px;
+}
+
+.roomCost_cost_wrap input{
+    border: none;
+    width: 70%;
+}
+
+/*roomDate*/
+.roomDate_wrap{
+    display: flex;
+    border-bottom: 1px solid #d9d9d9;
+    width: 100%;
+}
+
+.roomDate_contents{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 10px;
+    width: 60%;
+}
+
+.roomDate_calender{
+    width: 50%;
+    height: 30px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+.roomDate_radio_wrap{
+    display: flex;
+    justify-content: space-between;
+    width: 40%;
+}
+
+/*roomFloor*/
+.roomFloor_wrap{
+    display: flex;
+    border-bottom: 1px solid #d9d9d9;
+    width: 100%;
+}
+
+.roomFloor_contents{
+    display: flex;
+    margin: 15px;
+}
+
+.roomFloor_select{
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    margin-right: 15px;
+}
+
+.roomFloor_select select{
+    height: 30px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/*addInfo_wrap*/
+.addInfo_wrap{
+    display: flex;
+    border-bottom: 1.5px solid gray;
+    width: 100%;
+}
+
+.info_wrap{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.info_contents{
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 15px;
+}
+
+.info_contents div{
+    margin-right: 30px;
+}
+
+.info_contents_wrap{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.parking_cost{
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 5px;
+    height: 30px;
+    align-items: center;
+    width: 120px;
+    padding: 0 5px;
+}
+
+.parking_cost input{
+    border: none;
+    width: 70%;
+}
+
+.info_checkbox_wrap{
+    display: flex;
+    margin-top: 10px;
+}
+
+/*updateFile*/
+.updateFile_wrap{
+    display: flex;
+    border-bottom: 1.5px solid gray;
+    width: 100%;
+}
+
+.photo_wrap{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+/*detailDescription*/
+.detailDescription_wrap{
+    display: flex;
+    width: 100%;
+}
+
+.detailContents_wrap{
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    width: 100%;
+}
+
+.detailContents_wrap div{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.detail_title_input{
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.detail_textArea{
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.register_button{
+    width: 150px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    background-color: #0BB3FB;
+    margin-top: 50px;
+    border: none;
+    padding:10px;
+    border-radius: 8px;
+}
+
+.register_button:hover{
+    background-color: #0AA9ED;
+    cursor: pointer;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

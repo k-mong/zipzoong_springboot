@@ -60,8 +60,8 @@ public class Board extends BaseEntity{
 
     private String textArea;
 
-//    @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private List<RoomImage> roomImages = new ArrayList<>();
+    @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RoomImage> roomImages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

@@ -17,16 +17,17 @@
         <li>본인 명이의 계약이 된 집이 아닌경우 계약 명의자의 출석이 요구될 수 있습니다.</li>
         <li>금액 및 옵션을 정확한 정보를 입력 바랍니다.</li>
     </ul>
-    <form method="post" th:action="@{member/createBoard}" class="form_wrapper">
+    <form method="post" th:action="@{board/create}" class="register_form">
+        <div class="form_wrapper">
         <div class="roomType_wrap">
             <label class="title_label">매물 유형</label>
             <div class="roomType_radio">
                 <div>
-                    <input type="radio" id="roomType_one" name='roomType' value='one'/>
+                    <input type="radio" id="roomType_one" name='type' value='ONE'/>
                     <label for="roomType_one">원룸</label>
                 </div>
                 <div>
-                    <input type="radio" id="roomType_two" name='roomType' value='two'/>
+                    <input type="radio" id="roomType_two" name='type' value='TWO'/>
                     <label for="roomType_two">투룸</label>
                 </div>
             </div>
@@ -35,179 +36,243 @@
         <div class="address_wrap">
             <label class="title_label">매물 주소</label>
             <div class="addressZone">
-                <label>주소 검색</label>
+                <label class="subtitle" >주소 검색</label>
                 <div class="addressZone_input">
-                    <input type="text" class="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()">
+                    <input type="text" class="address" name="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()">
                     <button onclick="findAddr()">검색</button>
                 </div>
-                <input type="text" class="addressDetail" placeholder="상세주소 입력">
+                <input type="text" class="addressDetail" name="addressDetail" placeholder="상세주소 입력">
             </div>
         </div>
 
-        <div>
-            <label>방 정보</label>
-            <div>
-                <div>전용면적</div>
-                <div>
-                    <div>
-                        <input type="number" placeholder="평수 입력">
+        <div class="roomInfo_wrap">
+            <label class="title_label">방 정보</label>
+            <div class="roomInfo_content">
+                <div class="subtitle">전용면적</div>
+                <div class="roomInfoZone">
+                    <div class="roomInfo_input">
+                        <input type="number" name="roomArea" placeholder="평수 입력">
                         <span>평</span>
                     </div>
-                    <div>
-                        <input type="radio" id="roomInfo_open" name="roomInfo" value="open">
-                        <label for="roomInfo_open">오픈형</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="roomInfo_detachable" name="roomInfo" value="detachable">
-                        <label for="roomInfo_detachable">분리형</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="roomInfo_layer" name="roomInfo" value="layer">
-                        <label for="roomInfo_layer">복층형</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <label>거래 종류</label>
-            <div>
-                <input type="radio" id="rentType_M" name='rentType' value='month'/>
-                <label for="rentType_M">월세</label>
-            </div>
-            <div>
-                <input type="radio" id="rentType_Y" name='rentType' value='year'/>
-                <label for="rentType_Y">전세</label>
-            </div>
-        </div>
-
-        <div>
-            <label>가격 정보</label>
-            <div>
-                <div>
-                    <span>보증금</span>
-                    <div>
-                        <input type="number" value="deposit"/>
-                        <span>만원</span>
-                    </div>
-                </div>
-
-                <div>
-                    <span>월세</span>
-                    <div>
-                        <input type="number" value="month"/>
-                        <span>만원</span>
+                    <div class="roomInfo_radio">
+                        <div>
+                            <input type="radio" id="roomInfo_open" name="roomInfo" value="OPEN">
+                            <label for="roomInfo_open">오픈형</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="roomInfo_detachable" name="roomInfo" value="DETACHABLE">
+                            <label for="roomInfo_detachable">분리형</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="roomInfo_layer" name="roomInfo" value="LAYER">
+                            <label for="roomInfo_layer">복층형</label>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div>
-                <span>관리비 여부</span>
-                <input type="radio" name="radio" id="r2" value="0"><label for="r2">없음</label>
-                <input type="radio" name="radio" id="r1" value="1" checked><label for="r1">있음</label>
+        <div class="rentType_wrap">
+            <label class="title_label">거래 종류</label>
+            <div class="rentType_radio">
                 <div>
-                    <input type="number" name="number"/>
-                    <span>만원</span>
+                    <input type="radio" id="rentType_M" name='rentType' value='MONTH'/>
+                    <label for="rentType_M">월세</label>
+                </div>
+                <div>
+                    <input type="radio" id="rentType_Y" name='rentType' value='YEAR'/>
+                    <label for="rentType_Y">전세</label>
                 </div>
             </div>
         </div>
 
-        <div>
-            <label>입주 가능 일자</label>
-            <input type="radio" name="datePicker" id="date1" value="0"><label for="date1">즉시 입주</label>
-            <input type="radio" name="datePicker" id="date2" value="1" checked><label for="date2">일자 선택</label>
-            <div>
-                <input type="date" name="date"/>
-                <span>만원</span>
-            </div>
-        </div>
+        <div class="roomCost_wrap">
+            <label class="title_label">가격 정보</label>
+            <div class="roomCost_contents">
+                <div class="roomCost_input">
+                    <div>
+                        <span class="subtitle">보증금</span>
+                        <div class="roomCost_pay">
+                            <input type="number" name="deposit" value="deposit"/>
+                            <span>만원</span>
+                        </div>
+                    </div>
 
-        <div>
-            <label>층 수</label>
-            <div>
-                <span>전체 층 수</span>
-                <select name="totalFloor">
-                    <option value="">선택</option>
-                    <option value="1">1층</option>
-                    <option value="2">2층</option>
-                    <option value="3">3층</option>
-                    <option value="4">4층</option>
-                    <option value="5">5층</option>
-                    <option value="6">6층</option>
-                    <option value="7">7층</option>
-                    <option value="8">8층</option>
-                    <option value="9">9층</option>
-                </select>
-            </div>
-            <div>
-                <span>해당 층 수</span>
-                <select name="fllorsNumber">
-                    <option value="">선택</option>
-                    <option value="1">1층</option>
-                    <option value="2">2층</option>
-                    <option value="3">3층</option>
-                    <option value="4">4층</option>
-                    <option value="5">5층</option>
-                    <option value="6">6층</option>
-                    <option value="7">7층</option>
-                    <option value="8">8층</option>
-                    <option value="9">9층</option>
-                </select>
-            </div>
-        </div>
-
-        <div>
-            <label>추가 정보</label>
-            <div>
-                <span>엘리베이터</span>
-                <div>
-                    <input type="radio" id="elevator_false" name='elevator' value='false'/>
-                    <label for="elevator_false">없음</label>
+                    <div>
+                        <span class="subtitle">월세</span>
+                        <div class="roomCost_pay">
+                            <input type="number" name="month" value="month"/>
+                            <span>만원</span>
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <input type="radio" id="elevator_true" name='elevator' value='true'/>
-                    <label for="elevator_true">있음</label>
-                </div>
-            </div>
 
-            <div>
-                <span>주차 가능 여부</span>
-                <input type="radio" name="parking" id="parking1" value="0"><label for="parking1">불가능</label>
-                <input type="radio" name="parking" id="parking2" value="1" checked><label for="parking2">가능</label>
-                <div>
-                    <input type="number" name="number"/>
-                    <span>만원</span>
-                </div>
-            </div>
-
-            <div>
-                <span>옵션</span>
-                <div>
-                    <input type="checkbox" id="fridge" value="fridge">
-                    <label for="fridge">냉장고</label>
-                    <input type="checkbox" id="washer" value="washer">
-                    <label for="washer">세탁기</label>
-                    <input type="checkbox" id="air_conditioner" value="air_conditioner">
-                    <label for="air_conditioner">에어컨</label>
-                    <input type="checkbox" id="oven" value="oven">
-                    <label for="oven">전자렌지</label>
-                    <input type="checkbox" id="closet" value="closet">
-                    <label for="closet">옷장</label>
-                    <input type="checkbox" id="desk" value="desk">
-                    <label for="desk">책상</label>
+                <div class="roomCost_radio">
+                    <span class="subtitle">관리비 여부</span>
+                    <div class="roomCost_radio_wrap">
+                        <div>
+                            <input type="radio" name="cost" id="r2" value="0">
+                            <label for="r2">없음</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="cost" id="r1" value="1" checked>
+                            <label for="r1">있음</label>
+                        </div>
+                        <div class="roomCost_cost_wrap">
+                            <input type="number" name="roomCost"/>
+                            <span>만원</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="filebox clearfix">
-            <div class="inputFile">
-                <label for="AddImgs" class="addImgBtn">사진 등록</label>
-                <input type="file" id="AddImgs" class="upload-hidden" accept=".jpg, .png, .gif" multiple>
+        <div class="roomDate_wrap">
+            <label class="title_label">입주 가능 일자</label>
+            <div class="roomDate_contents">
+                <div class="roomDate_radio_wrap">
+                    <div>
+                        <input type="radio" name="datePicker" id="date1" value="0">
+                        <label for="date1">즉시 입주</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="datePicker" id="date2" value="1" checked>
+                        <label for="date2">일자 선택</label>
+                    </div>
+                </div>
+                <input class="roomDate_calender" type="date" name="date"/>
             </div>
-            <ul id="Preview" class="sortable"></ul>
         </div>
 
+        <div class="roomFloor_wrap">
+            <label class="title_label">층 수</label>
+            <div class="roomFloor_contents">
+                <div class="roomFloor_select">
+                    <span class="subtitle">전체 층 수</span>
+                    <select name="totalFloor">
+                        <option value="">선택</option>
+                        <option value="1">1층</option>
+                        <option value="2">2층</option>
+                        <option value="3">3층</option>
+                        <option value="4">4층</option>
+                        <option value="5">5층</option>
+                        <option value="6">6층</option>
+                        <option value="7">7층</option>
+                        <option value="8">8층</option>
+                        <option value="9">9층</option>
+                    </select>
+                </div>
+                <div class="roomFloor_select">
+                    <span class="subtitle">해당 층 수</span>
+                    <select name="floorsNumber">
+                        <option value="">선택</option>
+                        <option value="1">1층</option>
+                        <option value="2">2층</option>
+                        <option value="3">3층</option>
+                        <option value="4">4층</option>
+                        <option value="5">5층</option>
+                        <option value="6">6층</option>
+                        <option value="7">7층</option>
+                        <option value="8">8층</option>
+                        <option value="9">9층</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
+        <div class="addInfo_wrap">
+            <label class="title_label">추가 정보</label>
+            <div class="info_wrap">
+                <div class="info_contents">
+                    <span class="subtitle">엘리베이터</span>
+                    <div class="info_contents_wrap">
+                        <div>
+                            <input type="radio" id="elevator_false" name='elevator' value='false'/>
+                            <label for="elevator_false">없음</label>
+                        </div>
+                        <div>
+                            <input type="radio" id="elevator_true" name='elevator' value='true'/>
+                            <label for="elevator_true">있음</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info_contents">
+                    <span class="subtitle">주차 가능 여부</span>
+                    <div class="info_contents_wrap">
+                        <div>
+                            <input type="radio" name="parking" id="parking1" value="0">
+                            <label for="parking1">불가능</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="parking" id="parking2" value="1" checked>
+                            <label for="parking2">가능</label>
+                        </div>
+                        <div class="parking_cost">
+                            <input type="number" name="number"/>
+                            <span>만원</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info_contents">
+                    <span class="subtitle">옵션</span>
+                    <div class="info_checkbox_wrap">
+                        <div>
+                            <input type="checkbox" id="fridge" value="fridge">
+                            <label for="fridge">냉장고</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="washer" value="washer">
+                            <label for="washer">세탁기</label>
+                        </div>
+
+                        <div>
+                            <input type="checkbox" id="air_conditioner" value="air_conditioner">
+                            <label for="air_conditioner">에어컨</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="oven" value="oven">
+                            <label for="oven">전자렌지</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="closet" value="closet">
+                            <label for="closet">옷장</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="desk" value="desk">
+                            <label for="desk">책상</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="updateFile_wrap">
+            <label for="AddImgs" class="title_label">사진 등록</label>
+            <div class="photo_wrap">
+                <div class="inputFile">
+                    <input type="file" id="AddImgs" class="upload-hidden" accept=".jpg, .png, .gif" multiple>
+                </div>
+                <ul id="Preview" class="sortable"></ul>
+            </div>
+        </div>
+
+        <div class="detailDescription_wrap">
+            <label class="title_label">상세 설명</label>
+            <div class="detailContents_wrap">
+                <div>
+                    <span class="subtitle">제목</span>
+                    <input class="detail_title_input" maxlength="40" placeholder="리스트에 노출되는 문구입니다. 40자 이내로 작성해 주세요"/>
+                </div>
+                <div>
+                    <span class="subtitle">내용</span>
+                    <textarea class="detail_textArea" maxlength="1000" placeholder="매물 상세 페이지에 노출되는 문구입니다. 1000자 이내로 작성해 주세요."></textarea>
+                </div>
+            </div>
+        </div>
+        </div>
+        <button class="register_button" type="submit">매물 등록</button>
     </form>
     </div>
 </div>
@@ -216,8 +281,29 @@
     function findAddr() {
         new daum.Postcode({
             oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                var addr = '';
+                var extraAddr = '';
+
+                if(data.userSelectedType == 'R') {
+                    addr = data.roadAddress;
+                } else {
+                    addr = data.jibubAddress;
+                }
+
+                if(data.userSelectedType == 'R') {
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraAddr += data.bname;
+                    }
+                    if (data.buildingName !== '' && data.apartment == 'Y') {
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    if (extraAddr !== '') {
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                } else {
+                    document.getElementById().value = '';
+                }
+                document.getElementById("").value = addr;
             }
         }).open();
     }
@@ -230,18 +316,18 @@
         $("input:radio[name=radio]").click(function(){
 
             if($("input[name=radio]:checked").val() == "1"){
-                $("input[name=number]").attr("disabled",false);
+                $("input[name=roomCost]").attr("disabled",false).val("");
                 // radio 버튼의 value 값이 1이라면 활성화
 
             }else if($("input[name=radio]:checked").val() == "0"){
-                $("input[name=number]").attr("disabled",true);
+                $("input[name=roomCost]").attr("disabled",true).val("0");
                 // radio 버튼의 value 값이 0이라면 비활성화
             }
         });
 
         $("input:radio[name=datePicker]").click(function () {
             if($("input[name=datePicker]:checked").val() == "1") {
-                $("input[name=date]").attr("disabled", false);
+                $("input[name=date]").attr("disabled", false).val(local.date.now());
 
             }else if($("input[name=datePicker]:checked").val() == "0") {
                 $("input[name=date]").attr("disabled",true);

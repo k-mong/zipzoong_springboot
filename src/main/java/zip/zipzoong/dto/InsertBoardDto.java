@@ -2,6 +2,7 @@ package zip.zipzoong.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.domain.entity.RentType;
@@ -24,6 +25,7 @@ public class InsertBoardDto {
     private int month;
     private boolean cost;
     private int roomCost;
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate datePicker;
     private String totalFloor;
     private String follrsNumber;
