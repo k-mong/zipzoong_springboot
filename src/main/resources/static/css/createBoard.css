@@ -346,6 +346,17 @@ ul {
     padding: 15px;
 }
 
+.upload_Img {
+    display: none;
+}
+
+.upload {
+    width: 200px;
+    height: 200px;
+    background-color: antiquewhite;
+    cursor: pointer;
+}
+
 /*detailDescription*/
 .detailDescription_wrap{
     display: flex;

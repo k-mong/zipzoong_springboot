@@ -37,14 +37,25 @@
             <label class="title_label">매물 주소</label>
             <div class="addressZone">
                 <label class="subtitle" >주소 검색</label>
+<!--                <div class="addressZone_input">-->
+<!--                    <input type="text" class="address" name="address" placeholder="예) OOO동 OO-O, OO구 OO동" readonly="readonly">-->
+<!--                    <button onclick="findAddr()">검색</button>-->
+<!--                </div>-->
+<!--                <input type="text" class="addressDetail" name="addressDetail" placeholder="상세주소 입력">-->
+
                 <div class="addressZone_input">
-                    <input type="text" class="address" name="address" placeholder="예) OOO동 OO-O, OO구 OO동" onclick="findAddr()">
-                    <button onclick="findAddr()">검색</button>
+                    <input style="width: 40%;" placeholder="우편번호" name="addr1" id="addr1" type="text" readonly="readonly" >
+                    <button type="button" onclick="findAddr();">검색</button>
                 </div>
-                <input type="text" class="addressDetail" name="addressDetail" placeholder="상세주소 입력">
+                <div class="addressZone_input">
+                    <input style="top: 5px;" placeholder="도로명 주소" name="address" type="text" readonly="readonly" />
+                </div>
+                <div class="addressZone_input">
+                    <input placeholder="상세주소 입력" name="addressDetail" type="text" />
+                </div>
+
             </div>
         </div>
-
         <div class="roomInfo_wrap">
             <label class="title_label">방 정보</label>
             <div class="roomInfo_content">
@@ -111,11 +122,11 @@
                     <span class="subtitle">관리비 여부</span>
                     <div class="roomCost_radio_wrap">
                         <div>
-                            <input type="radio" name="cost" id="r2" value="0">
+                            <input type="radio" name="cost" id="r2" value="false">
                             <label for="r2">없음</label>
                         </div>
                         <div>
-                            <input type="radio" name="cost" id="r1" value="1" checked>
+                            <input type="radio" name="cost" id="r1" value="true" checked>
                             <label for="r1">있음</label>
                         </div>
                         <div class="roomCost_cost_wrap">
@@ -201,15 +212,15 @@
                     <span class="subtitle">주차 가능 여부</span>
                     <div class="info_contents_wrap">
                         <div>
-                            <input type="radio" name="parking" id="parking1" value="0">
+                            <input type="radio" name="parking" id="parking1" value="false">
                             <label for="parking1">불가능</label>
                         </div>
                         <div>
-                            <input type="radio" name="parking" id="parking2" value="1" checked>
+                            <input type="radio" name="parking" id="parking2" value="true" checked>
                             <label for="parking2">가능</label>
                         </div>
                         <div class="parking_cost">
-                            <input type="number" name="number"/>
+                            <input type="number" name="parkingCost"/>
                             <span>만원</span>
                         </div>
                     </div>
@@ -249,12 +260,12 @@
         </div>
 
         <div class="updateFile_wrap">
-            <label for="AddImgs" class="title_label">사진 등록</label>
+            <label class="title_label">사진 등록</label>
             <div class="photo_wrap">
                 <div class="inputFile">
-                    <input type="file" id="AddImgs" class="upload-hidden" accept=".jpg, .png, .gif" multiple>
+                    <input type="file" name="roomImages" class="upload_Img" accept=".jpg, .png, .gif" multiple>
+                    <div class="upload"></div>
                 </div>
-                <ul id="Preview" class="sortable"></ul>
             </div>
         </div>
 
@@ -279,31 +290,44 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function findAddr() {
+        var width = 500; //팝업의 너비
+        var height = 600; //팝업의 높이
         new daum.Postcode({
             oncomplete: function(data) {
-                var addr = '';
-                var extraAddr = '';
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                if(data.userSelectedType == 'R') {
-                    addr = data.roadAddress;
-                } else {
-                    addr = data.jibubAddress;
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
                 }
 
-                if(data.userSelectedType == 'R') {
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                        extraAddr += data.bname;
-                    }
-                    if (data.buildingName !== '' && data.apartment == 'Y') {
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    if (extraAddr !== '') {
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                } else {
-                    document.getElementById().value = '';
-                }
-                document.getElementById("").value = addr;
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                console.log(data.zonecode);
+                console.log(fullRoadAddr);
+
+
+                $("[name=addr1]").val(data.zonecode);
+                $("[name=address]").val(fullRoadAddr);
+
+
             }
         }).open();
     }
@@ -313,39 +337,68 @@
     $(document).ready(function () {
          $("#header").load("/header");
 
-        $("input:radio[name=radio]").click(function(){
 
-            if($("input[name=radio]:checked").val() == "1"){
+        $("input:radio[name=cost]").click(function(){
+
+            if($("input[name=cost]:checked").val() == "true"){
                 $("input[name=roomCost]").attr("disabled",false).val("");
-                // radio 버튼의 value 값이 1이라면 활성화
+                // radio 버튼의 value 값이
 
-            }else if($("input[name=radio]:checked").val() == "0"){
+            }else if($("input[name=cost]:checked").val() == "false"){
                 $("input[name=roomCost]").attr("disabled",true).val("0");
                 // radio 버튼의 value 값이 0이라면 비활성화
             }
         });
 
-        $("input:radio[name=datePicker]").click(function () {
-            if($("input[name=datePicker]:checked").val() == "1") {
-                $("input[name=date]").attr("disabled", false).val(local.date.now());
+        $("input:radio[name=datePicker]").click(function(){
+            if ($("input[name=datePicker]:checked").val() == "0") {
+                $("input[name=date]").val(new Date().toISOString().split('T')[0]).attr("disabled", true);
+            }
+            // 라디오 버튼 클릭 이벤트 핸들러
+            $("input:radio[name=datePicker]").click(function() {
+                if ($("input[name=datePicker]:checked").val() == "0") {
+                    // 즉시 입주를 선택한 경우 오늘 날짜로 설정
+                    const currentDate = new Date().toISOString().split('T')[0];
+                    $("input[name=date]").val(currentDate).attr("disabled", true);
+                } else if ($("input[name=datePicker]:checked").val() == "1") {
+                    // 일자 선택을 선택한 경우 날짜 필드 활성화
+                    $("input[name=date]").attr("disabled", false).val(""); // 빈 값으로 초기화
+                }
+            });
+        });
 
-            }else if($("input[name=datePicker]:checked").val() == "0") {
-                $("input[name=date]").attr("disabled",true);
+        // $("input:radio[name=datePicker]").click(function () {
+        //     if($("input[name=datePicker]:checked").val() == "1") {
+        //         $("input[name=date]").attr("disabled", false).val(local.date.now());
+        //
+        //     }else if($("input[name=datePicker]:checked").val() == "0") {
+        //         $("input[name=date]").attr("disabled",true);
+        //     }
+        // });
+
+        // $("input:radio[name=parking]").click(function () {
+        //     if($("input[name=parking]:checked").val() == "1") {
+        //         $("input[name=number]").attr("disabled",false);
+        //     }else if($("input[name=parking]:checked").val() == "0") {
+        //         $("input[name=number]").attr("disabled",true);
+        //     }
+        // })
+
+        $("input:radio[name=parking]").click(function(){
+
+            if($("input[name=parking]:checked").val() == "true"){
+                $("input[name=parkingCost]").attr("disabled",false).val("");
+                // radio 버튼의 value 값이 이라면 활성화
+
+            }else if($("input[name=parking]:checked").val() == "false"){
+                $("input[name=parkingCost]").attr("disabled",true).val("0");
+                // radio 버튼의 value 값이 false 이라면 비활성화, parkingCost 값은 0
             }
         });
 
-        $("input:radio[name=parking]").click(function () {
-            if($("input[name=parking]:checked").val() == "1") {
-                $("input[name=number]").attr("disabled",false);
-            }else if($("input[name=parking]:checked").val() == "0") {
-                $("input[name=number]").attr("disabled",true);
-            }
-        })
 
 
-
-     });
-
+    });
 
 
 </script>
