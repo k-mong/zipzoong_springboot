@@ -1,9 +1,16 @@
 package zip.zipzoong.service;
 
+import com.fasterxml.jackson.core.JsonParser;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.domain.entity.Board;
 import zip.zipzoong.domain.entity.Member;
@@ -15,6 +22,10 @@ import zip.zipzoong.dto.InsertBoardDto;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Service
@@ -30,6 +41,7 @@ public class BoardService {
 
     public String createBoard(InsertBoardDto insertBoardDto, String memberId) {
         System.out.println("createBoard 실행");
+        System.out.println(insertBoardDto.getDatePicker() + "getDatePicker BoardService");
         List<RoomImage> roomImage = insertImage(insertBoardDto);
 
         Member member = memberRepository.findByEmail(memberId).get();
@@ -111,6 +123,46 @@ public class BoardService {
         boardRepository.delete(board);
 
         return "게시글이 삭제됐습니다.";
+
+    }
+
+    public String getAddress() throws UnsupportedEncodingException, URISyntaxException, ParseException {
+        String lat = "";
+        String lng = "";
+        String city = "인천광역시 서구 심곡동";
+        String b_code = "";
+
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String appkey = "KakaoAK {b7d2b17b0b31f160b34d7bf533c7e9fb}";
+        headers.set("Authorization", appkey);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        String encode = URLEncoder.encode(city, "UTF-8");
+        String rawURI = "https://dapi.kakao.com/v2/local/search/address.json?query=" + encode;
+        URI uri = new URI(rawURI);
+
+        ResponseEntity<String> res = rest.exchange(uri, HttpMethod.GET, entity, String.class);
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject body = (JSONObject) jsonParser.parse(res.getBody().toString());
+        JSONArray docu = (JSONArray) body.get("documents");
+
+        if (docu.size() != 0) {
+            JSONObject addr = (JSONObject) docu.get(0);
+            if(addr.size() != 0) {
+                JSONObject addr1 = (JSONObject) addr.get("address");
+                if (b_code.length() < 1) {
+                    b_code = ((String) addr1.get("b_code")).substring(0, 5);
+                } else {
+                    b_code = ((String) addr1.get("h_code")).substring(0, 5);
+                }
+            }
+        }
+
+        return b_code;
 
     }
 

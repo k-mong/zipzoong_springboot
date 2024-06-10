@@ -143,15 +143,15 @@
             <div class="roomDate_contents">
                 <div class="roomDate_radio_wrap">
                     <div>
-                        <input type="radio" name="datePicker" id="date1" value="0">
+                        <input type="radio" name="date" id="date1" value="0">
                         <label for="date1">즉시 입주</label>
                     </div>
                     <div>
-                        <input type="radio" name="datePicker" id="date2" value="1" checked>
+                        <input type="radio" name="date" id="date2" value="1" checked>
                         <label for="date2">일자 선택</label>
                     </div>
                 </div>
-                <input class="roomDate_calender" type="date" name="date"/>
+                <input class="roomDate_calender" type="date" name="datePicker"/>
             </div>
         </div>
 
@@ -350,22 +350,23 @@
             }
         });
 
-        $("input:radio[name=datePicker]").click(function(){
-            if ($("input[name=datePicker]:checked").val() == "0") {
-                $("input[name=date]").val(new Date().toISOString().split('T')[0]).attr("disabled", true);
+        $("input:radio[name=date]").click(function(){
+            if ($("input[name=date]:checked").val() == "0") {
+                $("input[name=datePicker]").val(new Date().toISOString().split('T')[0]).attr("disabled", true);
             }
             // 라디오 버튼 클릭 이벤트 핸들러
-            $("input:radio[name=datePicker]").click(function() {
-                if ($("input[name=datePicker]:checked").val() == "0") {
+            $("input:radio[name=date]").click(function() {
+                if ($("input[name=date]:checked").val() == "0") {
                     // 즉시 입주를 선택한 경우 오늘 날짜로 설정
                     const currentDate = new Date().toISOString().split('T')[0];
-                    $("input[name=date]").val(currentDate).attr("disabled", true);
-                } else if ($("input[name=datePicker]:checked").val() == "1") {
+                    $("input[name=datePicker]").val(currentDate).attr("disabled", true);
+                } else if ($("input[name=date]:checked").val() == "1") {
                     // 일자 선택을 선택한 경우 날짜 필드 활성화
-                    $("input[name=date]").attr("disabled", false).val(""); // 빈 값으로 초기화
+                    $("input[name=datePicker]").attr("disabled", false).val(""); // 빈 값으로 초기화
                 }
             });
         });
+
 
         // $("input:radio[name=datePicker]").click(function () {
         //     if($("input[name=datePicker]:checked").val() == "1") {
@@ -388,11 +389,11 @@
 
             if($("input[name=parking]:checked").val() == "true"){
                 $("input[name=parkingCost]").attr("disabled",false).val("");
-                // radio 버튼의 value 값이 이라면 활성화
+                // radio 버튼의 value 값이
 
             }else if($("input[name=parking]:checked").val() == "false"){
                 $("input[name=parkingCost]").attr("disabled",true).val("0");
-                // radio 버튼의 value 값이 false 이라면 비활성화, parkingCost 값은 0
+                // radio 버튼의 value 값이 0이라면 비활성화
             }
         });
 

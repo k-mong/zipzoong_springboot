@@ -25,7 +25,7 @@ public class InsertBoardDto {
     private int month;
     private boolean cost;
     private int roomCost;
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePicker;
     private String totalFloor;
     private String follrsNumber;
