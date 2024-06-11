@@ -26,6 +26,13 @@
     // var map = new kakao.maps.Map(mapContainer, mapOption);
 
     $(document).ready(function () {
+
+        const token = /*[[${token}]]*/ 'defaultToken';
+        const refreshToken = /*[[${refreshToken}]]*/ 'defaultRefreshToken';
+
+        console.log('Access Token:', token);
+        console.log('Refresh Token:', refreshToken);
+
         $("#header").load("/header", function() {
             // header 로드가 완료된 후에 실행되는 코드
             var mapContainer = document.getElementById('map'); // 지도를 표시할 div
@@ -45,6 +52,7 @@
                 var map = new kakao.maps.Map(mapContainer, mapOption);
             };
         });
+
     });
 
 

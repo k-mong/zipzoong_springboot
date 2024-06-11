@@ -21,8 +21,17 @@ public class UserViewController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String index(HttpSession session, Model model) {
         System.out.println("들어옴");
+        String token = (String) session.getAttribute("token");
+        String refreshToken = (String) session.getAttribute("refreshToken");
+
+        System.out.println("Session Token: " + token);
+        System.out.println("Session RefreshToken: " + refreshToken);
+
+        // 토큰을 모델에 추가하여 뷰에서 사용할 수 있게 함
+        model.addAttribute("token", token);
+        model.addAttribute("refreshToken", refreshToken);
         return "index";
     }
 
