@@ -27,7 +27,7 @@
 
             <div id="moveJoinBtn" class="start-join">회원가입</div>
 
-            <input type="submit" class="loginBtn" value="시작하기">
+            <input type="submit" id="loginBtn" class="loginBtn" value="시작하기">
         </div>
     </div>
 
@@ -38,6 +38,10 @@
     $('#moveJoinBtn').click(function () {
         window.location.href = 'join';
     });
+
+    $('#loginBtn').click(function () {
+        window.location.href = '/';
+    })
 
 </script>
 

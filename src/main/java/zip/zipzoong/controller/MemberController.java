@@ -41,9 +41,10 @@ public class MemberController {
         String refreshToken = tokenProvider.generateRefreshToken(memberLoginDto);
         String result = memberService.login(memberLoginDto);
 
-        session.setAttribute("token", token);
-        session.setAttribute("refreshToken", refreshToken);
-        session.setAttribute("result", result);
+        HashMap<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("refreshToken", refreshToken);
+        response.put("result", result);
 
         session.setAttribute("memberNick", memberLoginDto.getEmail());
         model.addAttribute("memberNick", memberLoginDto.getEmail());

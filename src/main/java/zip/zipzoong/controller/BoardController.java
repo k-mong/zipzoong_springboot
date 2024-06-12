@@ -21,7 +21,7 @@ public class BoardController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/create")
-    public ResponseEntity<String> insertBoard(@ModelAttribute InsertBoardDto insertBoardDto,
+    public ResponseEntity<String> insertBoard(@RequestBody InsertBoardDto insertBoardDto,
                                               @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
         System.out.println("Received datePicker: " + insertBoardDto.getDatePicker());
         System.out.println("createBoard 실행");
