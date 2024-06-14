@@ -23,12 +23,22 @@
 
         </div>
     </div>
+    <form onsubmit="searchPlaces(); return false;">
     <div class="searchBox">
-        <input class="searchText" type="text" placeholder="원하시는 지역명, 지하철역을 입력해주세요">
+<!--        <input class="searchText" type="text" placeholder="원하시는 지역명, 지하철역을 입력해주세요">-->
+<!--        <button class="searchBtn" type="submit">-->
+<!--            <img src="../../static/images/돋보기.png">-->
+<!--        </button>-->
+
+
+        <input id="keyword" class="searchText" type="text" placeholder="원하시는 지역명, 지하철역을 입력해주세요">
         <button class="searchBtn" type="submit">
             <img src="../../static/images/돋보기.png">
         </button>
+
+
     </div>
+    </form>
     <div id="moveLoginBtn" class="loginBtn">
         로그인
     </div>
@@ -66,6 +76,23 @@
             window.location.href = "createBoard"
         });
 
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '/board/create', // 게시글 등록 엔드포인트
+        headers: {
+            'X-AUTH-REFRESHTOKEN': refreshToken, // 리프레시 토큰 헤더에 추가
+            'X-AUTH-TOKEN': token // 액세스 토큰 헤더에 추가
+        },
+        success: function(response) {
+            // 요청 성공 시 동작
+            console.log('게시글 등록 성공:', response);
+        },
+        error: function(error) {
+            // 요청 실패 시 동작
+            console.error('게시글 등록 실패:', error);
+        }
     });
 </script>
 

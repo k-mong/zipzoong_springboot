@@ -7,14 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.dto.MemberJoinDto;
 import zip.zipzoong.dto.MemberLoginDto;
 import zip.zipzoong.security.TokenProvider;
 import zip.zipzoong.service.MemberService;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,7 +33,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public RedirectView login(@ModelAttribute MemberLoginDto memberLoginDto, HttpSession session, Model model) {
+    public ResponseEntity<HashMap<String, String>> login(@ModelAttribute MemberLoginDto memberLoginDto, HttpSession session, Model model) {
         System.out.println("login 요청 들어옴");
         String token = tokenProvider.generationToken(memberLoginDto.getEmail());
         String refreshToken = tokenProvider.generateRefreshToken(memberLoginDto);
@@ -50,7 +48,7 @@ public class MemberController {
         model.addAttribute("memberNick", memberLoginDto.getEmail());
 
         System.out.println(memberLoginDto.getEmail());
-        return new RedirectView("/");
+        return ResponseEntity.ok(response);
     }
 
 }

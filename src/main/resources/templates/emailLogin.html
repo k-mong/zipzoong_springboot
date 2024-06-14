@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{../static/css/emailLogin.css}">
 </head>
 <body>
-<form method="post" th:action="@{member/login}">
+<form id=loginForm method="post" th:action="@{member/login}">
     <div class="top-wrapper">
         <div class="wrapper">
             <div class="middle-wrapper">
@@ -39,9 +39,32 @@
         window.location.href = 'join';
     });
 
-    $('#loginBtn').click(function () {
-        window.location.href = '/';
-    })
+    $('#loginForm').on('submit', function(event) {
+        event.preventDefault(); // 기본 폼 제출 동작을 막습니다.
+
+        // AJAX 요청을 수행합니다.
+        $.ajax({
+            type: 'POST',
+            url: '/member/login',
+            data: $('#loginForm').serialize(),
+            success: function(response) {
+
+                if (response.result === '로그인 성공!') {
+                    // 토큰을 로컬 스토리지에 저장합니다.
+                    localStorage.setItem('token', response.token);
+                    localStorage.setItem('refreshToken', response.refreshToken);
+
+                    // index 페이지로 리디렉션합니다.
+                    window.location.href = '/';
+                } else {
+                    alert('로그인 실패. 다시 시도해주세요.');
+                }
+            },
+            error: function(error) {
+                alert('로그인 실패. 다시 시도해주세요.');
+            }
+        });
+    });
 
 </script>
 
