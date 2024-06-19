@@ -2,6 +2,7 @@ package zip.zipzoong.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.domain.entity.Member;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@Setter
 @AllArgsConstructor
 public class InsertBoardDto {
     private RoomType roomType;
@@ -28,7 +30,7 @@ public class InsertBoardDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePicker;
     private String totalFloor;
-    private String follrsNumber;
+    private String floorsNumber;
     private boolean elevator;
     private boolean parking;
     private int parkingCost;

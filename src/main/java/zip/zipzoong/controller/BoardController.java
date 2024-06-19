@@ -5,6 +5,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.dto.InsertBoardDto;
 import zip.zipzoong.security.TokenProvider;
 import zip.zipzoong.service.BoardService;
@@ -21,9 +22,9 @@ public class BoardController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/create")
-    public ResponseEntity<String> insertBoard(@RequestBody InsertBoardDto insertBoardDto,
+    public ResponseEntity<String> insertBoard(@RequestPart("insertBoardDto") InsertBoardDto insertBoardDto,
+                                              @RequestPart("files") List<MultipartFile> files,
                                               @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
-        System.out.println("Received datePicker: " + insertBoardDto.getDatePicker());
         System.out.println("createBoard 실행");
         String newAccessToken = token; // 기본적으로는 받은 액세스 토큰을 사용
         if(!tokenProvider.checkValidToken(token)){  // 액세스토큰이 만료되면 리프레시토큰을 검사해서 유효한지 체크
@@ -34,7 +35,7 @@ public class BoardController {
         }
 
         String memberId = tokenProvider.getUserId(newAccessToken);
-        String result = boardService.createBoard(insertBoardDto, memberId);
+        String result = String.valueOf(boardService.createBoard(insertBoardDto, memberId));
         return ResponseEntity.ok(result + newAccessToken);
     }
 
@@ -55,9 +56,5 @@ public class BoardController {
         return ResponseEntity.ok(result + newAccessToken);
     }
 
-    @GetMapping("/getAddress")
-    public ResponseEntity<String> getAddress() throws UnsupportedEncodingException, URISyntaxException, ParseException {
-        String address = boardService.getAddress();
-        return ResponseEntity.ok(address);
-    }
+
 }

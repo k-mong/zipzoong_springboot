@@ -44,11 +44,12 @@ public class Board extends BaseEntity{
 
     private int roomCost;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate datePicker;
 
     private String totalFloor;
 
-    private String fllorsNumber;
+    private String floorsNumber;
 
     private boolean elevator;
 
