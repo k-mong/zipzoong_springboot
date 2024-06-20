@@ -22,8 +22,7 @@ public class BoardController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/create")
-    public ResponseEntity<String> insertBoard(@RequestPart("insertBoardDto") InsertBoardDto insertBoardDto,
-                                              @RequestPart("files") List<MultipartFile> files,
+    public ResponseEntity<String> insertBoard(@RequestBody InsertBoardDto insertBoardDto,
                                               @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
         System.out.println("createBoard 실행");
         String newAccessToken = token; // 기본적으로는 받은 액세스 토큰을 사용
