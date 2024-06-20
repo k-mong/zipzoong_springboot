@@ -2,6 +2,7 @@ package zip.zipzoong.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,7 @@ public class InsertBoardDto {
     private RoomType roomType;
     private String address;
     private String addressDetail;
-    private int roomArea;
+    private Integer roomArea;
     private RoomInformation roomInfo;
     private RentType rentType;
     private int deposit;

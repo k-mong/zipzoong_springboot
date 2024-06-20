@@ -9,7 +9,7 @@
 <body>
 <div class="top-wrapper">
     <div class="btn-wrapper">
-        <img src="../../static/images/집보는중m.png" class="indexBtn"/>
+        <img src="../../static/images/집보는중m.png" class="indexBtn" id="moveIndexBtn"/>
         <div class="text-wrapper">
             <span class="text">
                 원룸
@@ -74,6 +74,10 @@
 
         $('#moveCreateBoard').click(function () {
             window.location.href = "createBoard"
+        });
+
+        $('#moveIndexBtn').click(function () {
+            window.location.href = "/"
         });
 
     });

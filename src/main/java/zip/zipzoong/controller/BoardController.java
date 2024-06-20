@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
 import zip.zipzoong.security.TokenProvider;
 import zip.zipzoong.service.BoardService;
@@ -22,8 +23,10 @@ public class BoardController {
     private final TokenProvider tokenProvider;
 
     @PostMapping("/create")
-    public ResponseEntity<String> insertBoard(@RequestBody InsertBoardDto insertBoardDto,
-                                              @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
+    public ResponseEntity<String> insertBoard(@ModelAttribute InsertBoardDto insertBoardDto,
+                                              @ModelAttribute BoardImgForm boardImgForm,
+                                              @RequestHeader(name = "X-AUTH-REFRESHTOKEN", required = false) String refreshToken,
+                                              @RequestHeader(name = "X-AUTH-TOKEN") String token) {
         System.out.println("createBoard 실행");
         String newAccessToken = token; // 기본적으로는 받은 액세스 토큰을 사용
         if(!tokenProvider.checkValidToken(token)){  // 액세스토큰이 만료되면 리프레시토큰을 검사해서 유효한지 체크
@@ -34,7 +37,7 @@ public class BoardController {
         }
 
         String memberId = tokenProvider.getUserId(newAccessToken);
-        String result = String.valueOf(boardService.createBoard(insertBoardDto, memberId));
+        String result = String.valueOf(boardService.createBoard(insertBoardDto, boardImgForm, memberId));
         return ResponseEntity.ok(result + newAccessToken);
     }
 

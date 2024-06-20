@@ -267,6 +267,7 @@
                     <div class="upload"></div>
                 </div>
             </div>
+            <div class="preview-images-zone"></div>
         </div>
 
         <div class="detailDescription_wrap">
@@ -283,7 +284,7 @@
             </div>
         </div>
         </div>
-        <button class="register_button" id="createBoardButton" type="submit">매물 등록</button>
+        <button class="register_button" type="submit">매물 등록</button>
     </form>
     </div>
 </div>
@@ -400,29 +401,30 @@
             }
         });
 
-        $("#createBoardButton").click(function() {
-            var formData = new FormData(document.getElementById("createBoardForm"));
-            var jsonData = {};
-            formData.forEach((value, key) => {
-                if (jsonData[key]) {
-                    if (!Array.isArray(jsonData[key])) {
-                        jsonData[key] = [jsonData[key]];
-                    }
-                    jsonData[key].push(value);
-                } else {
-                    jsonData[key] = value;
-                }
-            });
+        $('#uploadButton').on('click', function() {
+            var formData = new FormData();
+            var files = $('#fileInput')[0].files;
+
+            // FormData에 파일 추가
+            for (var i = 0; i < files.length; i++) {
+                formData.append('files', files[i]);
+            }
+        });
+
+
+        $("#createBoardForm").on('submit', function() {
 
             $.ajax({
                 type: 'POST',
                 url: '/board/create',
+                data: $('#createBoardForm').serialize(),
+                contentType: false,
+                processData: false,
                 headers: {
                     'X-AUTH-REFRESHTOKEN': refreshToken,
                     'X-AUTH-TOKEN': token,
-                    'Content-Type': 'application/json'
                 },
-                data: JSON.stringify(jsonData),
+
                 success: function(response) {
                     console.log('게시글 등록 성공:', response);
 

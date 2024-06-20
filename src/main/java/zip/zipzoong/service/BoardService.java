@@ -11,6 +11,7 @@ import zip.zipzoong.domain.entity.RoomImage;
 import zip.zipzoong.domain.repository.BoardRepository;
 import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.domain.repository.RoomImageRepository;
+import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
 
 import java.io.File;
@@ -28,11 +29,12 @@ public class BoardService {
     @Value("${file.boardImagePath}")
     private String uploadFolder;
 
-    public Board createBoard(InsertBoardDto insertBoardDto, String memberId) {
+    @Transactional
+    public Board createBoard(InsertBoardDto insertBoardDto, BoardImgForm boardImgForm, String memberId) {
         System.out.println("createBoard 실행");
         System.out.println(insertBoardDto.getDatePicker() + "getDatePicker");
 
-        List<RoomImage> roomImage = insertImage(insertBoardDto);
+        List<RoomImage> roomImage = insertImage(boardImgForm);
 
         Member member = memberRepository.findByEmail(memberId).get();
         System.out.println("memberId = " + member);
@@ -81,18 +83,19 @@ public class BoardService {
         return board;
     }
 
-    @Transactional
-    public List<RoomImage> insertImage(InsertBoardDto insertBoardDto) {
+
+    public List<RoomImage> insertImage(BoardImgForm boardImgForm) {
+        System.out.println("insertImage 실행");
         List<RoomImage> roomImages = new ArrayList<>();
 
-        if(insertBoardDto.getFiles() != null && !insertBoardDto.getFiles().isEmpty()) {
+        if(boardImgForm.getFiles() != null && !boardImgForm.getFiles().isEmpty()) {
             //만약 이미지파일이 있고, 이미지파일이 비어있지 않다면
 
-            if(insertBoardDto.getFiles().size() > 7 ) {
+            if(boardImgForm.getFiles().size() > 7 ) {
                 throw new RuntimeException("이미지는 최대 7개까지 가능합니다.");
             }
 
-            for (MultipartFile file : insertBoardDto.getFiles()) {
+            for (MultipartFile file : boardImgForm.getFiles()) {
 
                 // MultipartFile file 안에 인자값으로 들어온 이미지 파일을 하나씩 너어줘
                 UUID uuid = UUID.randomUUID();
