@@ -350,10 +350,35 @@ ul {
     display: none;
 }
 
+/*.upload {*/
+/*    width: 200px;*/
+/*    height: 200px;*/
+/*    background-color: antiquewhite;*/
+/*    cursor: pointer;*/
+/*}*/
+
 .upload {
-    width: 200px;
-    height: 200px;
-    background-color: antiquewhite;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.previewImage {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     cursor: pointer;
 }
 

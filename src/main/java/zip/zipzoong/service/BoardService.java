@@ -16,6 +16,7 @@ import zip.zipzoong.dto.InsertBoardDto;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -26,8 +27,7 @@ public class BoardService {
     private final RoomImageRepository roomImageRepository;
     private final MemberRepository memberRepository;
 
-    @Value("${file.boardImagePath}")
-    private String uploadFolder;
+
 
     @Transactional
     public Board createBoard(InsertBoardDto insertBoardDto, BoardImgForm boardImgForm, String memberId) {
@@ -54,6 +54,7 @@ public class BoardService {
         System.out.println("parkingCost = " + insertBoardDto.getParkingCost());
         System.out.println("title = " + insertBoardDto.getTitle());
         System.out.println("content = " + insertBoardDto.getTextArea());
+        System.out.println("roomImage = " + roomImage);
 
         Board board = boardRepository.save(
                 Board.builder()
@@ -85,6 +86,7 @@ public class BoardService {
 
 
     public List<RoomImage> insertImage(BoardImgForm boardImgForm) {
+        System.out.println("boardImgForm = " + boardImgForm);
         System.out.println("insertImage 실행");
         List<RoomImage> roomImages = new ArrayList<>();
 
@@ -96,14 +98,14 @@ public class BoardService {
             }
 
             for (MultipartFile file : boardImgForm.getFiles()) {
-
                 // MultipartFile file 안에 인자값으로 들어온 이미지 파일을 하나씩 너어줘
+
                 UUID uuid = UUID.randomUUID();
                 // 서버 내부에서 관리하는 파일명은 유일한 이름을 생성하는 UUID를 사용해서 충돌하지 않도록 한다.
                 // 각 이미지에대한 식별값 생성
                 String imageFileName = uuid + "_" + file.getOriginalFilename();
                 // 이미지파일 이름 규칙지정
-                File destinationFile = new File(uploadFolder + imageFileName);
+                File destinationFile = new File(imageFileName);
                 try {
                     file.transferTo(destinationFile);
                     // 인자값으로 들어온 이미지파일의 저장경로 지정
@@ -113,6 +115,7 @@ public class BoardService {
 
                 RoomImage image = RoomImage.builder()
                         .url("/boardImages/" + imageFileName)
+                        .createdAt(LocalDateTime.now())
                         .build();
 
                 roomImageRepository.save(image);

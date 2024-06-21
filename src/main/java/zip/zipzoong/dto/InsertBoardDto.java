@@ -21,7 +21,7 @@ public class InsertBoardDto {
     private RoomType roomType;
     private String address;
     private String addressDetail;
-    private Integer roomArea;
+    private int roomArea;
     private RoomInformation roomInfo;
     private RentType rentType;
     private int deposit;
@@ -38,6 +38,6 @@ public class InsertBoardDto {
     private String title;
     private String textArea;
     private Member member;
-    private List<MultipartFile> files;
+//    private List<MultipartFile> files;
 
 }

@@ -62,7 +62,7 @@
                 <div class="subtitle">전용면적</div>
                 <div class="roomInfoZone">
                     <div class="roomInfo_input">
-                        <input type="number" name="roomArea" placeholder="평수 입력">
+                        <input type="number" name="roomArea" placeholder="평수 입력" value="">
                         <span>평</span>
                     </div>
                     <div class="roomInfo_radio">
@@ -104,7 +104,7 @@
                     <div>
                         <span class="subtitle">보증금</span>
                         <div class="roomCost_pay">
-                            <input type="number" name="deposit" value="deposit"/>
+                            <input type="number" name="deposit" value=""/>
                             <span>만원</span>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                     <div>
                         <span class="subtitle">월세</span>
                         <div class="roomCost_pay">
-                            <input type="number" name="month" value="month"/>
+                            <input type="number" name="month" value=""/>
                             <span>만원</span>
                         </div>
                     </div>
@@ -259,16 +259,26 @@
             </div>
         </div>
 
-        <div class="updateFile_wrap">
-            <label class="title_label">사진 등록</label>
-            <div class="photo_wrap">
-                <div class="inputFile">
-                    <input type="file" name="roomImages" class="upload_Img" accept=".jpg, .png, .gif" multiple>
-                    <div class="upload"></div>
+<!--        <div class="updateFile_wrap">-->
+<!--            <label class="title_label">사진 등록</label>-->
+<!--            <div class="photo_wrap">-->
+<!--                <div class="inputFile">-->
+<!--                    <input type="file" name="roomImages" id="roomImages" class="upload_Img" accept=".jpg, .png, .gif" multiple>-->
+<!--                    <div class="upload"></div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+            <div class="updateFile_wrap">
+                <label class="title_label">사진 등록</label>
+                <div class="photo_wrap">
+                    <div class="inputFile">
+                        <input type="file" name="files" id="roomImages" class="upload_Img" accept=".jpg, .png, .gif" multiple>
+                        <img src="../../static/images/사진추가이미지.png" class="upload" id="uploadBox">
+                    </div>
                 </div>
+                <div id="previewContainer" class="preview-container"></div>
             </div>
-            <div class="preview-images-zone"></div>
-        </div>
 
         <div class="detailDescription_wrap">
             <label class="title_label">상세 설명</label>
@@ -401,25 +411,70 @@
             }
         });
 
-        $('#uploadButton').on('click', function() {
-            var formData = new FormData();
-            var files = $('#fileInput')[0].files;
+        let uploadedFiles = [];
 
-            // FormData에 파일 추가
-            for (var i = 0; i < files.length; i++) {
-                formData.append('files', files[i]);
-            }
+        // 클릭 시 파일 선택 창 열기
+        $("#uploadBox").click(function() {
+            $("#roomImages").click();
         });
+
+        // 파일 선택 시 미리보기
+        $("#roomImages").change(function(event) {
+            const files = event.target.files;
+            const previewContainer = $('#previewContainer');
+
+            if (uploadedFiles.length + files.length > 7) {
+                alert("최대 7장까지 업로드할 수 있습니다.");
+                $("#roomImages").val(''); // 파일 입력 초기화
+                return;
+            }
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file) {
+                    uploadedFiles.push(file); // 추가된 파일을 배열에 저장
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = $('<img>').attr('src', e.target.result).addClass('previewImage').click(function() {
+                            removeImage(i, img); // 이미지 클릭 시 삭제
+                        });
+                        previewContainer.append(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+
+            updateFileList();
+        });
+
+        // 파일 리스트 업데이트
+        function updateFileList() {
+            const dataTransfer = new DataTransfer();
+            uploadedFiles.forEach(file => dataTransfer.items.add(file));
+            $("#roomImages")[0].files = dataTransfer.files;
+        }
+
+        // 이미지 제거
+        function removeImage(index, imgElement) {
+            uploadedFiles.splice(index, 1); // 배열에서 파일 제거
+            imgElement.remove(); // 이미지 요소 제거
+            updateFileList(); // 파일 리스트 업데이트
+        }
 
 
         $("#createBoardForm").on('submit', function() {
+            // event.preventDefault();
+
+            // var formData = new FormData(this);
 
             $.ajax({
                 type: 'POST',
                 url: '/board/create',
                 data: $('#createBoardForm').serialize(),
-                contentType: false,
-                processData: false,
+                // data: formData,
+                // contentType: false,
+                // processData: false,
                 headers: {
                     'X-AUTH-REFRESHTOKEN': refreshToken,
                     'X-AUTH-TOKEN': token,
