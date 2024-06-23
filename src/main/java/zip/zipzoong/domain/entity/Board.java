@@ -11,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -68,7 +69,6 @@ public class Board extends BaseEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String url;
 
 
 }

@@ -464,17 +464,17 @@
 
 
         $("#createBoardForm").on('submit', function() {
-            // event.preventDefault();
+            event.preventDefault();
 
-            // var formData = new FormData(this);
+            var formData = new FormData(this);
 
             $.ajax({
                 type: 'POST',
                 url: '/board/create',
-                data: $('#createBoardForm').serialize(),
-                // data: formData,
-                // contentType: false,
-                // processData: false,
+                // data: $('#createBoardForm').serialize(),
+                data: formData,
+                contentType: false,
+                processData: false,
                 headers: {
                     'X-AUTH-REFRESHTOKEN': refreshToken,
                     'X-AUTH-TOKEN': token,

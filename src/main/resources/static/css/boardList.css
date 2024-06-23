@@ -1,0 +1,48 @@
+.wrapper{
+    display: flex;
+    width: 25rem;
+    padding: 1rem;
+    height: 7rem;
+    font-size: 12px;
+    line-height: 1.5rem;
+    border-bottom: 1px solid gray;
+}
+
+.imgWrap{
+}
+
+.roomImg{
+    width: 8rem;
+    height: 7rem;
+    border-radius: 5px;
+}
+
+.roomInfoWrap{
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.priceWrap{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.price{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.heartWrap img{
+    width: 1.5rem;
+}
+
+.floorInfo{
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+}
+
+.roomContents{
+    color: #c0c0c0;
+}

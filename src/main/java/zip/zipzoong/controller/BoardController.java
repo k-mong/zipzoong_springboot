@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
+import zip.zipzoong.dto.response.BoardListDto;
 import zip.zipzoong.security.TokenProvider;
 import zip.zipzoong.service.BoardService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,6 +41,12 @@ public class BoardController {
         String memberId = tokenProvider.getUserId(newAccessToken);
         String result = String.valueOf(boardService.createBoard(insertBoardDto, boardImgForm, memberId));
         return ResponseEntity.ok(result + newAccessToken);
+    }
+
+    @GetMapping("/allBoardList")
+    public ResponseEntity<List<BoardListDto>> allBoardList() {
+        List<BoardListDto> allBoardList = boardService.findAllBoardList();
+        return ResponseEntity.ok(allBoardList);
     }
 
     @DeleteMapping("/delete/{id}")

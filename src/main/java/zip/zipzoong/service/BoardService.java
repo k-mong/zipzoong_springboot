@@ -13,6 +13,7 @@ import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.domain.repository.RoomImageRepository;
 import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
+import zip.zipzoong.dto.response.BoardListDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,11 +31,10 @@ public class BoardService {
 
 
     @Transactional
-    public Board createBoard(InsertBoardDto insertBoardDto, BoardImgForm boardImgForm, String memberId) {
+    public Board createBoard(InsertBoardDto insertBoardDto,BoardImgForm boardImgForm, String memberId) {
         System.out.println("createBoard 실행");
         System.out.println(insertBoardDto.getDatePicker() + "getDatePicker");
 
-        List<RoomImage> roomImage = insertImage(boardImgForm);
 
         Member member = memberRepository.findByEmail(memberId).get();
         System.out.println("memberId = " + member);
@@ -54,7 +54,7 @@ public class BoardService {
         System.out.println("parkingCost = " + insertBoardDto.getParkingCost());
         System.out.println("title = " + insertBoardDto.getTitle());
         System.out.println("content = " + insertBoardDto.getTextArea());
-        System.out.println("roomImage = " + roomImage);
+//        System.out.println("roomImage = " + roomImage);
 
         Board board = boardRepository.save(
                 Board.builder()
@@ -76,18 +76,20 @@ public class BoardService {
                         .parkingCost(insertBoardDto.getParkingCost())
                         .title(insertBoardDto.getTitle())
                         .textArea(insertBoardDto.getTextArea())
-                        .url(roomImage.toString())
                         .member(member)
                         .build());
 
-
+        List<RoomImage> roomImage = insertImage(boardImgForm, board);
+        board.setRoomImages(roomImage);
         return board;
     }
 
 
-    public List<RoomImage> insertImage(BoardImgForm boardImgForm) {
+    public List<RoomImage> insertImage(BoardImgForm boardImgForm, Board board) {
         System.out.println("boardImgForm = " + boardImgForm);
         System.out.println("insertImage 실행");
+
+
         List<RoomImage> roomImages = new ArrayList<>();
 
         if(boardImgForm.getFiles() != null && !boardImgForm.getFiles().isEmpty()) {
@@ -116,6 +118,7 @@ public class BoardService {
                 RoomImage image = RoomImage.builder()
                         .url("/boardImages/" + imageFileName)
                         .createdAt(LocalDateTime.now())
+                        .board(board)
                         .build();
 
                 roomImageRepository.save(image);
@@ -124,6 +127,26 @@ public class BoardService {
             }
         }
         return roomImages;
+    }
+
+    public List<BoardListDto> findAllBoardList() {
+        List<Board> boardList = boardRepository.findAll();
+        List<BoardListDto> boardListDtos = new ArrayList<>();
+        for (Board board : boardList) {
+            BoardListDto boardListDto = BoardListDto.builder()
+                    .roomImage(board.getRoomImages().get(0))
+                    .depoist(board.getDeposit())
+                    .month(board.getMonth())
+                    .floorsNumber(Integer.parseInt(board.getFloorsNumber()))
+                    .address(board.getAddress())
+                    .title(board.getTitle())
+                    .build();
+
+            boardListDtos.add(boardListDto);
+        }
+
+        return boardListDtos;
+
     }
 
     public String deleteBoard(Long boardId, String memberId) {
