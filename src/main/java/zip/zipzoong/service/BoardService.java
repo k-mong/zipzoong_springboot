@@ -28,7 +28,8 @@ public class BoardService {
     private final RoomImageRepository roomImageRepository;
     private final MemberRepository memberRepository;
 
-
+    @Value("${file.boardImages}")
+    private String uploadPath;
 
     @Transactional
     public Board createBoard(InsertBoardDto insertBoardDto,BoardImgForm boardImgForm, String memberId) {
@@ -107,7 +108,8 @@ public class BoardService {
                 // 각 이미지에대한 식별값 생성
                 String imageFileName = uuid + "_" + file.getOriginalFilename();
                 // 이미지파일 이름 규칙지정
-                File destinationFile = new File(imageFileName);
+                File destinationFile = new File(uploadPath + imageFileName);
+
                 try {
                     file.transferTo(destinationFile);
                     // 인자값으로 들어온 이미지파일의 저장경로 지정
@@ -134,16 +136,29 @@ public class BoardService {
         List<BoardListDto> boardListDtos = new ArrayList<>();
         for (Board board : boardList) {
             BoardListDto boardListDto = BoardListDto.builder()
+                    .rentType(board.getRentType())
                     .roomImage(board.getRoomImages().get(0))
-                    .depoist(board.getDeposit())
+                    .deposit(board.getDeposit())
                     .month(board.getMonth())
-                    .floorsNumber(Integer.parseInt(board.getFloorsNumber()))
+                    .floorsNumber(board.getFloorsNumber())
                     .address(board.getAddress())
                     .title(board.getTitle())
+                    .roomArea(board.getRoomArea())
                     .build();
 
             boardListDtos.add(boardListDto);
+
+            System.out.println("rentType" + board.getRentType());
+            System.out.println("roomImage" + board.getRoomImages());
+            System.out.println("floorsNumber" + board.getFloorsNumber());
+            System.out.println("deposit" + board.getDeposit());
+            System.out.println("month" + board.getMonth());
+            System.out.println("address" + board.getFloorsNumber());
+            System.out.println("title" + board.getAddress());
+            System.out.println("roomArea" + board.getRoomArea());
         }
+
+
 
         return boardListDtos;
 

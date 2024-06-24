@@ -1,5 +1,6 @@
 package zip.zipzoong.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -62,6 +63,7 @@ public class Board extends BaseEntity{
 
     private String textArea;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RoomImage> roomImages = new ArrayList<>();
 

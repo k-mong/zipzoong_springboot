@@ -6,28 +6,70 @@
     <link rel="stylesheet" href="../../static/css/boardList.css">
 </head>
 <body>
-<div class="wrapper">
-    <div class="imgWrap">
-        <img class="roomImg" src="../../static/images/사진추가이미지.png" alt="img" />
-    </div>
-    <div class="roomInfoWrap">
-        <div class="priceWrap">
-            <div class="price">월세 500/ 50</div>
-            <div class="heartWrap">
-                <img src="../../static/images/하트.png"/>
-<!--                <img src="../../static/images/좋아요.png"/>-->
+
+<!--<div class="wrapper">-->
+<!--    <div class="imgWrap">-->
+<!--        <img class="roomImg" src="../../static/images/사진추가이미지.png" alt="img" />-->
+<!--    </div>-->
+<!--    <div class="roomInfoWrap">-->
+<!--        <div class="priceWrap">-->
+<!--            <div class="price" th:if="${rentType} == 'MONTH'" th:value="'월세' + ${deposit} + '/' + ${Month}"></div>-->
+<!--            <div class="price" th:if="${rentType} == 'YEAR'" th:value="'전세' + ${deposit} + '/' + ${Month}"></div>-->
+<!--            <div class="heartWrap" id="hartWrap">-->
+<!--                <img src="../../static/images/하트.png" id="likeBtn"/>-->
+<!--                <img src="../../static/images/좋아요.png" id="unlikeBtn"/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="floorInfo">-->
+<!--            <div class="mr-7">3층</div>-->
+<!--            <div>33.33m2</div>-->
+<!--        </div>-->
+<!--        <div>관악구 봉천동</div>-->
+<!--        <div class="roomContents">깔끔 그 잡채</div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div th:each="board : ${allBoardList}">
+    <div class="wrapper">
+        <div class="imgWrap">
+            <img class="roomImg" th:src="${board.getRoomImage()}" alt="img" />
+        </div>
+        <div class="roomInfoWrap">
+            <div class="priceWrap">
+                <div class="price" th:if="${board.getRentType()} == 'MONTH'" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
+                <div class="price" th:if="${board.getRentType()} == 'YEAR'" th:text="'전세 ' + ${board.getDeposit()}"></div>
+                <div class="heartWrap" id="heartWrap">
+                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>
+                    <img src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>
+                </div>
             </div>
+            <div class="floorInfo">
+                <div class="mr-7" th:text="${board.getFloorsNumber()} + '층'"></div>
+                <div th:text="${board.getRoomArea()} + '평'"></div>
+            </div>
+            <div th:text="${board.getAddress()}"></div>
+            <div class="roomContents" th:text="${board.getTitle()}"></div>
         </div>
-        <div class="floorInfo">
-            <div class="mr-7">3층</div>
-            <div>33.33m2</div>
-        </div>
-        <div>관악구 봉천동</div>
-        <div class="roomContents">깔끔 그 잡채</div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function () {
+        $(".unlikeBtn").hide(); // 클래스 선택자로 수정
+
+        $(".heartWrap").click(function () {
+            var likeBtn = $(this).find(".likeBtn");
+            var unlikeBtn = $(this).find(".unlikeBtn");
+
+            if (unlikeBtn.is(":hidden")) {
+                likeBtn.hide();
+                unlikeBtn.show();
+            } else {
+                likeBtn.show();
+                unlikeBtn.hide();
+            }
+        });
+    });
 
 </script>
 </body>
