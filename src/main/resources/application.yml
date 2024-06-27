@@ -47,4 +47,4 @@ jwt:
 
 
 file:
-  boardImages: src/main/resources/static/boardImages/
+  path: src/main/resources/static/boardImages/

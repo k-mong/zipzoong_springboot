@@ -28,7 +28,7 @@ public class BoardService {
     private final RoomImageRepository roomImageRepository;
     private final MemberRepository memberRepository;
 
-    @Value("${file.boardImages}")
+    @Value("${file.path}")
     private String uploadPath;
 
     @Transactional
@@ -89,6 +89,7 @@ public class BoardService {
     public List<RoomImage> insertImage(BoardImgForm boardImgForm, Board board) {
         System.out.println("boardImgForm = " + boardImgForm);
         System.out.println("insertImage 실행");
+        String imagePath = System.getProperty("user.dir") + uploadPath;
 
 
         List<RoomImage> roomImages = new ArrayList<>();
@@ -108,7 +109,7 @@ public class BoardService {
                 // 각 이미지에대한 식별값 생성
                 String imageFileName = uuid + "_" + file.getOriginalFilename();
                 // 이미지파일 이름 규칙지정
-                File destinationFile = new File(uploadPath + imageFileName);
+                File destinationFile = new File(imagePath + imageFileName);
 
                 try {
                     file.transferTo(destinationFile);
