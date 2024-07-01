@@ -43,11 +43,11 @@ public class BoardController {
         return ResponseEntity.ok(result + newAccessToken);
     }
 
-    @GetMapping("/allBoardList")
-    public ResponseEntity<List<BoardListDto>> allBoardList() {
-        List<BoardListDto> allBoardList = boardService.findAllBoardList();
-        return ResponseEntity.ok(allBoardList);
-    }
+//    @GetMapping("/allBoardList")
+//    public ResponseEntity<List<BoardListDto>> allBoardList() {
+//        List<BoardListDto> allBoardList = boardService.findAllBoardList();
+//        return ResponseEntity.ok(allBoardList);
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBoard(@PathVariable Long id,

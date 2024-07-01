@@ -32,7 +32,7 @@
 <div th:each="board : ${allBoardList}">
     <div class="wrapper">
         <div class="imgWrap">
-            <img class="roomImg" th:src="${board.getRoomImage()}" alt="img" />
+            <img class="roomImg" th:src="@{${board.roomImage}}" alt="img" id="roomImg"/>
         </div>
         <div class="roomInfoWrap">
             <div class="priceWrap">
@@ -45,7 +45,7 @@
             </div>
             <div class="floorInfo">
                 <div class="mr-7" th:text="${board.getFloorsNumber()} + '층'"></div>
-                <div th:text="${board.getRoomArea()} + '평'"></div>
+                <div th:text="${board.roomArea} + '평'"></div>
             </div>
             <div th:text="${board.getAddress()}"></div>
             <div class="roomContents" th:text="${board.getTitle()}"></div>
@@ -55,6 +55,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+
         $(".unlikeBtn").hide(); // 클래스 선택자로 수정
 
         $(".heartWrap").click(function () {

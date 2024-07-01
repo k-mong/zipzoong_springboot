@@ -3,7 +3,8 @@ spring:
     hibernate:
       ddl-auto: none
   #    show-sql: true
-
+  mvc:
+    static-path-pattern: "/static/**"
   security:
     oauth2:
       client:
@@ -34,8 +35,11 @@ spring:
     check-template-location: true
     suffix: .html
     cache: false
-  mvc:
-    static-path-pattern: "/static/**"
+  web:
+    resources:
+      static-locations: "classpath:/static/"
+      add-mappings: true
+
 #sql 쿼리문 표시
 logging:
   level:

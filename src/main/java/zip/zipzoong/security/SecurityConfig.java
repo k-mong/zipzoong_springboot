@@ -39,7 +39,7 @@ public class SecurityConfig {
                 // 세선고정보호? (이 위로는 기본적으로 고정 jwt 사용을위한 설정)
                 .authorizeRequests( // 특정 url 에대한 권한 설정
                         authorize -> authorize
-                                .requestMatchers("/swagger-ui/**","/user/**", "/static/**").permitAll()); // 모두 허용
+                                .requestMatchers("/swagger-ui/**","/user/**", "/static/**", "boardImages/**").permitAll()); // 모두 허용
 
         return http.build();
     }

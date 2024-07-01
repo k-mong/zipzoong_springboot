@@ -89,7 +89,8 @@ public class BoardService {
     public List<RoomImage> insertImage(BoardImgForm boardImgForm, Board board) {
         System.out.println("boardImgForm = " + boardImgForm);
         System.out.println("insertImage 실행");
-        String imagePath = System.getProperty("user.dir") + uploadPath;
+        // 절대경로 설정
+        String imagePath = System.getProperty("user.dir") + File.separator + uploadPath;
 
 
         List<RoomImage> roomImages = new ArrayList<>();
@@ -135,10 +136,12 @@ public class BoardService {
     public List<BoardListDto> findAllBoardList() {
         List<Board> boardList = boardRepository.findAll();
         List<BoardListDto> boardListDtos = new ArrayList<>();
+
         for (Board board : boardList) {
+            String roomImage = board.getRoomImages().get(0).getUrl();
             BoardListDto boardListDto = BoardListDto.builder()
                     .rentType(board.getRentType())
-                    .roomImage(board.getRoomImages().get(0))
+                    .roomImage(roomImage)
                     .deposit(board.getDeposit())
                     .month(board.getMonth())
                     .floorsNumber(board.getFloorsNumber())
@@ -150,7 +153,7 @@ public class BoardService {
             boardListDtos.add(boardListDto);
 
             System.out.println("rentType" + board.getRentType());
-            System.out.println("roomImage" + board.getRoomImages());
+            System.out.println("roomImage" + roomImage);
             System.out.println("floorsNumber" + board.getFloorsNumber());
             System.out.println("deposit" + board.getDeposit());
             System.out.println("month" + board.getMonth());

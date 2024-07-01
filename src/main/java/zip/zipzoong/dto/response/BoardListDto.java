@@ -6,13 +6,13 @@ import lombok.*;
 import zip.zipzoong.domain.entity.RentType;
 import zip.zipzoong.domain.entity.RoomImage;
 
-@Data
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardListDto {
     private RentType rentType;
-    private RoomImage roomImage;
+    private String roomImage;
     private int deposit;
     private int month;
     private String floorsNumber;
