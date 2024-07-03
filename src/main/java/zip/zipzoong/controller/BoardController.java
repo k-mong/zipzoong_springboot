@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
+import zip.zipzoong.dto.response.AddressListDto;
 import zip.zipzoong.dto.response.BoardListDto;
 import zip.zipzoong.security.TokenProvider;
 import zip.zipzoong.service.BoardService;
@@ -43,11 +44,11 @@ public class BoardController {
         return ResponseEntity.ok(result + newAccessToken);
     }
 
-//    @GetMapping("/allBoardList")
-//    public ResponseEntity<List<BoardListDto>> allBoardList() {
-//        List<BoardListDto> allBoardList = boardService.findAllBoardList();
-//        return ResponseEntity.ok(allBoardList);
-//    }
+    @GetMapping("/addressList")
+    public ResponseEntity<List<AddressListDto>> addressList() {
+        List<AddressListDto> addressList = boardService.findAddress();
+        return ResponseEntity.ok(addressList);
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBoard(@PathVariable Long id,

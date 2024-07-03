@@ -48,11 +48,11 @@
             script.onload = function() {
                 // 지도를 생성합니다
                 var map = new kakao.maps.Map(mapContainer, mapOption);
+                var marker = new kakao.maps.Marker({
+                   position: new kakao.maps.LatLng(37.553210, 126.972613), map: map
+                });
             };
         });
-
-
-
     });
 
 </script>

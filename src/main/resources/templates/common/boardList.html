@@ -32,7 +32,7 @@
 <div th:each="board : ${allBoardList}">
     <div class="wrapper">
         <div class="imgWrap">
-            <img class="roomImg" th:src="@{${board.roomImage}}" alt="img" id="roomImg"/>
+            <img class="roomImg" th:src="@{'../static' + ${board.getRoomImage()}}" alt="img" id="roomImg"/>
         </div>
         <div class="roomInfoWrap">
             <div class="priceWrap">

@@ -13,6 +13,7 @@ import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.domain.repository.RoomImageRepository;
 import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
+import zip.zipzoong.dto.response.AddressListDto;
 import zip.zipzoong.dto.response.BoardListDto;
 
 import java.io.File;
@@ -133,6 +134,7 @@ public class BoardService {
         return roomImages;
     }
 
+
     public List<BoardListDto> findAllBoardList() {
         List<Board> boardList = boardRepository.findAll();
         List<BoardListDto> boardListDtos = new ArrayList<>();
@@ -157,8 +159,8 @@ public class BoardService {
             System.out.println("floorsNumber" + board.getFloorsNumber());
             System.out.println("deposit" + board.getDeposit());
             System.out.println("month" + board.getMonth());
-            System.out.println("address" + board.getFloorsNumber());
-            System.out.println("title" + board.getAddress());
+            System.out.println("title" + board.getTitle());
+            System.out.println("address" + board.getAddress());
             System.out.println("roomArea" + board.getRoomArea());
         }
 
@@ -166,6 +168,21 @@ public class BoardService {
 
         return boardListDtos;
 
+    }
+
+    public List<AddressListDto> findAddress() {
+        List<Board> boardList = boardRepository.findAll();
+        List<AddressListDto> addressListDtos = new ArrayList<>();
+        for (Board board : boardList) {
+            AddressListDto addressListDto = AddressListDto.builder()
+                    .address(board.getAddress())
+                    .build();
+
+            addressListDtos.add(addressListDto);
+
+            System.out.println(addressListDto);
+        }
+        return addressListDtos;
     }
 
     public String deleteBoard(Long boardId, String memberId) {

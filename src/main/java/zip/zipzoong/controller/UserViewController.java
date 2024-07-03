@@ -31,7 +31,7 @@ public class UserViewController {
 
     @GetMapping("/")
     public String index() {
-        System.out.println("들어옴");
+        System.out.println("index실행!");
         return "index";
     }
 
