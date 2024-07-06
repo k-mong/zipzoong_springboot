@@ -27,31 +27,90 @@
     // // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
     // var map = new kakao.maps.Map(mapContainer, mapOption);
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
+    //
+    //     $("#header").load("/header", function() {
+    //         // header 로드가 완료된 후에 실행되는 코드
+    //         $("#allBoardList").load("/allBoardList");
+    //
+    //         var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+    //         var mapOption = {
+    //             center: new kakao.maps.LatLng(37.5665, 126.9780), // 지도의 중심좌표
+    //             level: 5 // 지도의 확대 레벨
+    //         };
+    //
+    //         // Kakao 지도 API를 비동기적으로 로드
+    //         var script = document.createElement('script');
+    //         script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=b7d2b17b0b31f160b34d7bf533c7e9fb';
+    //         document.head.appendChild(script);
+    //
+    //         // Kakao 지도 API 스크립트가 로드되면 실행되는 함수
+    //         script.onload = function() {
+    //             // 지도를 생성
+    //             var map = new kakao.maps.Map(mapContainer, mapOption);
+    //             // 마커 생성
+    //             var marker = new kakao.maps.Marker({
+    //                position: new kakao.maps.LatLng(37.553210, 126.972613), map: map
+    //             });
+    //
+    //             $(".searchBtn").click(function () {
+    //                 var keyword = $("#keyword").val();
+    //
+    //
+    //             });
+    //         };
+    //     });
+    // });
 
+
+    $(document).ready(function () {
         $("#header").load("/header", function() {
             // header 로드가 완료된 후에 실행되는 코드
-            $("#allBoardList").load("/allBoardList");
+            $("#allBoardList").load("/allBoardList", function() {
+                var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+                var mapOption = {
+                    center: new kakao.maps.LatLng(37.5665, 126.9780), // 지도의 중심좌표
+                    level: 5 // 지도의 확대 레벨
+                };
 
-            var mapContainer = document.getElementById('map'); // 지도를 표시할 div
-            var mapOption = {
-                center: new kakao.maps.LatLng(37.5665, 126.9780), // 지도의 중심좌표
-                level: 5 // 지도의 확대 레벨
-            };
+                // Kakao 지도 API 스크립트가 로드되면 실행되는 함수
+                function initMap() {
+                    var map = new kakao.maps.Map(mapContainer, mapOption);
+                    var geocoder = new kakao.maps.services.Geocoder();
+                    var markers = [];
 
-            // Kakao 지도 API를 비동기적으로 로드
-            var script = document.createElement('script');
-            script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=b7d2b17b0b31f160b34d7bf533c7e9fb';
-            document.head.appendChild(script);
+                    // 서버로부터 주소 데이터를 가져옵니다
+                    $.ajax({
+                        url: "/board/addressList",
+                        method: "GET",
+                        success: function(data) {
+                            data.forEach(function(address) {
+                                // 주소로 좌표를 검색합니다
+                                geocoder.addressSearch(address, function(result, status) {
+                                    if (status === kakao.maps.services.Status.OK) {
+                                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                                        var marker = new kakao.maps.Marker({
+                                            map: map,
+                                            position: coords
+                                        });
+                                        markers.push(marker);
+                                    }
+                                });
+                            });
+                        },
+                        error: function(err) {
+                            console.error("Error fetching addresses:", err);
+                        }
+                    });
+                }
 
-            // Kakao 지도 API 스크립트가 로드되면 실행되는 함수
-            script.onload = function() {
-                // 지도를 생성합니다
-                var map = new kakao.maps.Map(mapContainer, mapOption);
-                var marker = new kakao.maps.Marker({
-                   position: new kakao.maps.LatLng(37.553210, 126.972613), map: map
-                });
-            };
+                var script = document.createElement('script');
+                script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=b7d2b17b0b31f160b34d7bf533c7e9fb';
+                script.onload = function() {
+                    kakao.maps.load(initMap);
+                };
+                document.head.appendChild(script);
+            });
         });
     });
 

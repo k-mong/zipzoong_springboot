@@ -171,6 +171,7 @@ public class BoardService {
     }
 
     public List<AddressListDto> findAddress() {
+        System.out.println("findAddress 실행!!");
         List<Board> boardList = boardRepository.findAll();
         List<AddressListDto> addressListDtos = new ArrayList<>();
         for (Board board : boardList) {

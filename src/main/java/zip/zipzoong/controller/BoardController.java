@@ -46,7 +46,9 @@ public class BoardController {
 
     @GetMapping("/addressList")
     public ResponseEntity<List<AddressListDto>> addressList() {
+        System.out.println("controller addressList 실행");
         List<AddressListDto> addressList = boardService.findAddress();
+        System.out.println("addressList = " + addressList);
         return ResponseEntity.ok(addressList);
     }
 
