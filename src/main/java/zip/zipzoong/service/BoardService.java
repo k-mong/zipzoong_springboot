@@ -170,21 +170,21 @@ public class BoardService {
 
     }
 
-    public List<AddressListDto> findAddress() {
-        System.out.println("findAddress 실행!!");
-        List<Board> boardList = boardRepository.findAll();
-        List<AddressListDto> addressListDtos = new ArrayList<>();
-        for (Board board : boardList) {
-            AddressListDto addressListDto = AddressListDto.builder()
-                    .address(board.getAddress())
-                    .build();
-
-            addressListDtos.add(addressListDto);
-
-            System.out.println(addressListDto);
-        }
-        return addressListDtos;
-    }
+//    public List<AddressListDto> findAddress() {
+//        System.out.println("findAddress 실행!!");
+//        List<Board> boardList = boardRepository.findAll();
+//        List<AddressListDto> addressListDtos = new ArrayList<>();
+//        for (Board board : boardList) {
+//            AddressListDto addressListDto = AddressListDto.builder()
+//                    .address(board.getAddress())
+//                    .build();
+//
+//            addressListDtos.add(addressListDto);
+//
+//            System.out.println(addressListDto);
+//        }
+//        return addressListDtos;
+//    }
 
     public String deleteBoard(Long boardId, String memberId) {
         Member findMember = memberRepository.findByEmail((memberId))

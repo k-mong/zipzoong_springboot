@@ -47,7 +47,9 @@
                 <div class="mr-7" th:text="${board.getFloorsNumber()} + '층'"></div>
                 <div th:text="${board.roomArea} + '평'"></div>
             </div>
-            <div th:text="${board.getAddress()}"></div>
+            <div class="addressInfo">
+                <div th:text="${board.getAddress()}"></div>
+            </div>
             <div class="roomContents" th:text="${board.getTitle()}"></div>
         </div>
     </div>
