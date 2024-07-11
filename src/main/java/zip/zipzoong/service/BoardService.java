@@ -142,6 +142,7 @@ public class BoardService {
         for (Board board : boardList) {
             String roomImage = board.getRoomImages().get(0).getUrl();
             BoardListDto boardListDto = BoardListDto.builder()
+                    .id(board.getId())
                     .rentType(board.getRentType())
                     .roomImage(roomImage)
                     .deposit(board.getDeposit())
@@ -154,6 +155,7 @@ public class BoardService {
 
             boardListDtos.add(boardListDto);
 
+            System.out.println("id" + board.getId());
             System.out.println("rentType" + board.getRentType());
             System.out.println("roomImage" + roomImage);
             System.out.println("floorsNumber" + board.getFloorsNumber());

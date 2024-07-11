@@ -50,11 +50,11 @@
             success: function(response) {
 
                 if (response.result === '로그인 성공!') {
-                    // 토큰을 로컬 스토리지에 저장합니다.
+                    // 토큰을 로컬 스토리지에 저장
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('refreshToken', response.refreshToken);
 
-                    // index 페이지로 리디렉션합니다.
+                    // index 페이지로 리디다이렉트
                     window.location.href = '/';
                 } else {
                     alert('로그인 실패. 다시 시도해주세요.');

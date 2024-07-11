@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import zip.zipzoong.domain.entity.Board;
 import zip.zipzoong.domain.entity.Member;
+import zip.zipzoong.domain.repository.BoardRepository;
 import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.dto.MemberJoinDto;
 import zip.zipzoong.dto.MemberLoginDto;
@@ -18,6 +20,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private  final BoardRepository boardRepository;
 
     public Member join(MemberJoinDto memberJoinDto) {
         if(memberRepository.findByEmail(memberJoinDto.getEmail()).isPresent()) {
@@ -44,4 +47,14 @@ public class MemberService {
         return "로그인 성공!";
     }
 
+    public String likeBoard(String memberId, Long boardId) {
+        Member member = memberRepository.findByEmail(memberId)
+                .orElseThrow(() -> new RuntimeException("사용자가 없습니다"));
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+
+
+        return "게시글 좋아요";
+    }
 }

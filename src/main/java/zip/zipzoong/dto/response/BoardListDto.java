@@ -11,6 +11,7 @@ import zip.zipzoong.domain.entity.RoomImage;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardListDto {
+    private Long id;
     private RentType rentType;
     private String roomImage;
     private int deposit;
