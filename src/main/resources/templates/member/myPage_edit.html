@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/myPage_edit.css">
+</head>
+<body>
+<div class="myPage_layout">
+    <div class="layout">
+        <div class="layoutRouterWrap">
+            <div class="router">
+                <a class="routerLink">
+                    <span>프로필 수정</span>
+                </a>
+                <a class="routerNoLink">
+                    <span>관심목록</span>
+                </a>
+                <a class="routerNoLink">
+                    <span>내 게시글</span>
+                </a>
+            </div>
+        </div>
+
+        <form class="editForm">
+            <div class="editWrap">
+                <div class="profileImgWrap">
+                    <img alt="profileImg" />
+                    <div class="editImgBtn">
+                        <!-- 카메라 이미지 넣어야함 -->
+                        <FaCamera color={"white"} onClick={handleClick} />
+                        <input
+                            className=" hidden"
+                            type="file"
+                            accept="image/jpg, image/jpeg, image/png"
+                            multiple
+                        />
+                    </div>
+                </div>
+                <div class="userInfoInputWrap">
+                    <div class="inputWrap">
+                        <label htmlFor="email">
+                            이메일 주소
+                        </label>
+                        <Input id="email" placeholder="Email" />
+                    </div>
+                    <div class="inputWrap">
+                        <label htmlFor="nickName">
+                            닉네임
+                        </label>
+                        <Input id="nickName" placeholder="nickName" />
+                        <button class="duplicateCheck">중복검사</button>
+                    </div>
+                    <button class="saveBtn">저장하기</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

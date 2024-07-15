@@ -63,6 +63,7 @@ public class Board extends BaseEntity{
 
     private String textArea;
 
+
     @JsonIgnore
     @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RoomImage> roomImages = new ArrayList<>();
@@ -70,6 +71,9 @@ public class Board extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RoomOption> roomOptions = new ArrayList<>();
 
 
 

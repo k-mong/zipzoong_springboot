@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/boardDetail.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="detailWrap">
+        <div class="imgWrap">
+            <img alt="roomImg"/>
+        </div>
+        <div class="titleWrap">
+            <div class="roomCostWrap">
+                <span class="roomNumber">등록번호 {res.seq}</span>
+                <div class="costWrap">
+                    <span>원룸 월세 </span>
+                    <span class="cost">
+                        {res.deposit}/{res.month}만원
+                    </span>
+                </div>
+                <span>관리비 {res.roomCost}만원</span>
+            </div>
+            <div class="buttonWrap">
+                <button class="chatBtn" className="hover:bg-hover">
+                    채팅하기
+                </button>
+                <button>하트</button>
+            </div>
+        </div>
+
+<!--Contents-->
+        <div class="contentsWrap">
+            <div class="roomInfo">1.5형 분리형 공간 넓은 잠실 풀옵션 분리형 원룸</div>
+            <div>
+                <div class="infoWrap">
+                    <img alt="roomWidth" />
+                    <span>7평</span>
+                </div>
+                <div class="infoWrap">
+                    <img alt="room" />
+                    <span>분리형 원룸</span>
+                </div>
+                <div class="infoWrap">
+                    <img alt="floor" />
+                    <span>5층</span>
+                </div>
+                <div class="infoWrap">
+                    <img alt="parking" />
+                    <span>주차 불가능</span>
+                </div>
+                <div class="infoWrap">
+                    <img alt="calendar" />
+                    <span>0000.00.00 이후 입주가능</span>
+                </div>
+                <div class="infoWrap">
+                    <img alt="direction" />
+                    <span>남서향</span>
+                </div>
+                <div class="infoWrap">
+                    <img alt="elevator" />
+                    <span>엘리베이터 있음</span>
+                </div>
+            </div>
+        </div>
+
+        <!--Option-->
+        <div class="optionWrap">
+            <div class="optionTitle">옵션 정보</div>
+            <div class="optionInfoWrap">
+                <div class="optionInfo">
+                    <img alt="closet" />
+                    <span>옷장</span>
+                </div>
+                <div class="optionInfo">
+                    <img alt="refrigerator" />
+                    <span>냉장고</span>
+                </div>
+                <div class="optionInfo">
+                    <img alt="airConditioner" />
+                    <span>에어컨</span>
+                </div>
+                <div class="optionInfo">
+                    <img alt="washing" />
+                    <span>세탁기</span>
+                </div>
+                <div class="optionInfo">
+                    <img src={oven} alt="oven" />
+                    <span>전자레인지</span>
+                </div>
+                <div class="optionInfo">
+                    <img alt="desk" />
+                    <span>책상</span>
+                </div>
+            </div>
+        </div>
+
+<!--Description-->
+        <div>
+            <div class="descriptionTitle" className="font-bold text-lg my-7">상세 설명</div>
+            <div>{res.textArea}</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

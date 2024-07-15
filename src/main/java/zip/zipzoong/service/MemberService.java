@@ -47,14 +47,18 @@ public class MemberService {
         return "로그인 성공!";
     }
 
-    public String likeBoard(String memberId, Long boardId) {
-        Member member = memberRepository.findByEmail(memberId)
-                .orElseThrow(() -> new RuntimeException("사용자가 없습니다"));
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-
-
-
-        return "게시글 좋아요";
-    }
+//    public String likeBoard(String memberId, Long boardId) {
+//
+//        Member findMember = memberRepository.findByEmail(memberId).get();
+//        Board findBoard = boardRepository.findById(boardId).get();
+//
+//        if (!findMember.) {
+//            throw new RuntimeException("로그인 해주세요");
+//        } else if (!findBoard.isPresent()) {
+//            throw new RuntimeException("게시글을 찾을 수 없습니다.");
+//        } else {
+////
+//        }
+//        return "게시글 좋아요";
+//    }
 }

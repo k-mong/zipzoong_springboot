@@ -1,0 +1,135 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 80px;
+}
+
+.detailWrap{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 60%;
+}
+
+.imgWrap{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+    padding: 20px 0;
+}
+
+/*Title*/
+.titleWrap{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.roomCostWrap{
+    padding: 10px 0;
+}
+
+.roomNumber{
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.costWrap{
+    font-size: 24px;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+.cost{
+    color: #178AF4;
+}
+
+/*Button*/
+.buttonWrap{
+    display: flex;
+    align-items: center;
+}
+
+.chatBtn{
+    background-color: #0AA9ED;
+    width: 120px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.chatBtn:hover{
+    background-color: #178AF4;
+    cursor: pointer;
+}
+
+/*Contents*/
+.contentsWrap{
+    padding: 20px 0;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.roomInfo{
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.infoWrap{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.infoWrap img{
+    width: 20px;
+    margin-right: 20px;
+}
+
+.infoWrap span{
+    font-weight: 600;
+}
+
+/*Option*/
+.optionWrap{
+    padding-bottom: 24px;
+    border-bottom: 1px solid gray;
+}
+
+.optionTitle{
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+.optionInfoWrap{
+    display: flex;
+    justify-content: space-around;
+}
+
+.optionInfo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.optionInfo img{
+    /*width는 실제 이미지 적용 후 변경해야함*/
+    width: 60px;
+}
+
+.optionInfo span{
+    font-weight: 600;
+    margin-top: 15px;
+}
+
+/*Description*/
+.descriptionTitle{
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 0;
+}

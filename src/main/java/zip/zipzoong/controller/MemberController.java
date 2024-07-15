@@ -51,10 +51,10 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/like/{id}")
-    public ResponseEntity<String> likeBoard(@RequestParam String memberId, @PathVariable Long id) {
-        memberService.likeBoard(memberId, id);
-        return ResponseEntity.ok("게시글 좋아요");
-    }
+//    @PostMapping("/like/{id}")
+//    public ResponseEntity<String> likeBoard(@RequestParam String memberId, @PathVariable Long id) {
+//        memberService.likeBoard(memberId, id);
+//        return ResponseEntity.ok("게시글 좋아요 성공");
+//    }
 
 }

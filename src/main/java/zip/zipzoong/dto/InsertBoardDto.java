@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
-import zip.zipzoong.domain.entity.Member;
-import zip.zipzoong.domain.entity.RentType;
-import zip.zipzoong.domain.entity.RoomInformation;
-import zip.zipzoong.domain.entity.RoomType;
+import zip.zipzoong.domain.entity.*;
 
 import java.time.LocalDate;
 import java.util.List;
