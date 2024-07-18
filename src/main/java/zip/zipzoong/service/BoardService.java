@@ -56,6 +56,7 @@ public class BoardService {
         System.out.println("parkingCost = " + insertBoardDto.getParkingCost());
         System.out.println("title = " + insertBoardDto.getTitle());
         System.out.println("content = " + insertBoardDto.getTextArea());
+        System.out.println("roomOption = " + insertBoardDto.getRoomOption());
 //        System.out.println("roomImage = " + roomImage);
 
         Board board = boardRepository.save(
@@ -76,6 +77,7 @@ public class BoardService {
                         .elevator(insertBoardDto.isElevator())
                         .parking(insertBoardDto.isParking())
                         .parkingCost(insertBoardDto.getParkingCost())
+                        .roomOption(insertBoardDto.getRoomOption())
                         .title(insertBoardDto.getTitle())
                         .textArea(insertBoardDto.getTextArea())
                         .member(member)

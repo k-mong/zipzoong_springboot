@@ -32,6 +32,7 @@ public class InsertBoardDto {
     private boolean elevator;
     private boolean parking;
     private int parkingCost;
+    private String roomOption;
     private String title;
     private String textArea;
     private Member member;

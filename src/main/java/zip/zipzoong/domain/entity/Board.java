@@ -59,21 +59,23 @@ public class Board extends BaseEntity{
 
     private int parkingCost;
 
+    private String roomOption;
+
     private String title;
 
     private String textArea;
 
 
     @JsonIgnore
-    @OneToMany(mappedBy = "board",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RoomImage> roomImages = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<RoomOption> roomOptions = new ArrayList<>();
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<LikeBoard> likeBoards = new ArrayList<>();
 
 
 
