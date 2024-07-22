@@ -69,5 +69,22 @@ public class BoardController {
         return ResponseEntity.ok(result + newAccessToken);
     }
 
+    @PostMapping("/like/{id}")
+    public ResponseEntity<String> likeBoard(@PathVariable Long id,
+                                            @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
+        String newAccessToken = token;
+        if(!tokenProvider.checkValidToken(token)){
+            newAccessToken = tokenProvider.checkRefreshToken(refreshToken);
+            if(newAccessToken == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("토큰이 만료되었습니다.");
+            }
+        }
+
+        String memberId = tokenProvider.getUserId(newAccessToken);
+
+        String result = boardService.likeBoard(memberId, id);
+        return ResponseEntity.ok(result);
+    }
+
 
 }

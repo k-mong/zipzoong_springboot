@@ -2,13 +2,16 @@ package zip.zipzoong.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import zip.zipzoong.domain.entity.Board;
+import zip.zipzoong.domain.entity.LikeBoard;
 import zip.zipzoong.domain.entity.Member;
 import zip.zipzoong.domain.entity.RoomImage;
 import zip.zipzoong.domain.repository.BoardRepository;
+import zip.zipzoong.domain.repository.LikeBoardRepository;
 import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.domain.repository.RoomImageRepository;
 import zip.zipzoong.dto.BoardImgForm;
@@ -28,6 +31,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final RoomImageRepository roomImageRepository;
     private final MemberRepository memberRepository;
+    private final LikeBoardRepository likeBoardRepository;
 
     @Value("${file.path}")
     private String uploadPath;
@@ -203,6 +207,25 @@ public class BoardService {
 
     }
 
+    public String likeBoard(String memberId, Long boardId) {
+        Member member = memberRepository.findByEmail(memberId).orElseThrow(()
+                -> new RuntimeException("회원을 찾을 수 없습니다."));
+        Board board = boardRepository.findById(boardId).orElseThrow(()
+                -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        if (member.getLikeBoards().stream().anyMatch(likeBoard -> likeBoard.getBoard().equals(board))) {
+            likeBoardRepository.deleteByMemberAndBoard(member, board);
+            return "게시글 좋아요 취소";
+        } else {
+            LikeBoard likeBoard = LikeBoard.builder()
+                    .member(member)
+                    .board(board)
+                    .build();
+
+            likeBoardRepository.save(likeBoard);
+            return "게시글 좋아요";
+        }
+    }
 
 
 

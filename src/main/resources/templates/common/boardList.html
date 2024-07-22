@@ -15,8 +15,8 @@
         <div th:text="${board.getId()}" hidden="hidden"></div>
         <div class="roomInfoWrap">
             <div class="priceWrap">
-                <div class="price" th:if="${board.getRentType()} == 'MONTH'" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
-                <div class="price" th:if="${board.getRentType()} == 'YEAR'" th:text="'전세 ' + ${board.getDeposit()}"></div>
+                <div class="price" th:if="${board.getRentType()} == ${board.getRentType().MONTH}" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
+                <div class="price" th:if="${board.getRentType()} == ${board.getRentType().YEAR}" th:text="'전세 ' + ${board.getDeposit()}"></div>
                 <div class="heartWrap" id="heartWrap">
                     <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>
                     <img src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>
