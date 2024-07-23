@@ -8,7 +8,7 @@
 <body>
 
 <div th:each="board : ${allBoardList}">
-    <div class="wrapper">
+    <div class="wrapper" id="moveBoardDetailBtn">
         <div class="imgWrap">
             <img class="roomImg" th:src="@{'../static' + ${board.getRoomImage()}}" alt="img" id="roomImg"/>
         </div>
@@ -36,6 +36,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
+
+        $('#moveBoardDetailBtn').click(function () {
+            var boardId = $(this).data("id");
+            window.location.href = "board/boardDetail/" + boardId;
+        })
 
         $(".unlikeBtn").hide(); // 빨간 하트 숨기기(기본은 흰 하트)
 

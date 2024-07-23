@@ -82,7 +82,7 @@ public class BoardController {
 
         String memberId = tokenProvider.getUserId(newAccessToken);
 
-        String result = boardService.likeBoard(memberId, id);
+        String result = String.valueOf(boardService.likeBoard(memberId, id));
         return ResponseEntity.ok(result);
     }
 

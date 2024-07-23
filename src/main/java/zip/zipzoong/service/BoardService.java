@@ -17,12 +17,14 @@ import zip.zipzoong.domain.repository.RoomImageRepository;
 import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
 import zip.zipzoong.dto.response.AddressListDto;
+import zip.zipzoong.dto.response.BoardDetailDto;
 import zip.zipzoong.dto.response.BoardListDto;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -178,6 +180,30 @@ public class BoardService {
 
     }
 
+    public BoardDetailDto findBoardDetail(Long id) {
+        Board findBoard = boardRepository.findById(id).get();
+
+        String roomImages = findBoard.getRoomImages().stream()
+                .map(RoomImage::getUrl)
+                .collect(Collectors.joining(","));
+
+        BoardDetailDto boardDetailDto = BoardDetailDto.builder()
+                .roomImage(roomImages)
+                .id(findBoard.getId())
+                .rentType(findBoard.getRentType())
+                .deposit(findBoard.getDeposit())
+                .month(findBoard.getMonth())
+                .roomArea(findBoard.getRoomArea())
+                .roomInformation(findBoard.getRoomInfo())
+                .floorsNumber(findBoard.getFloorsNumber())
+                .datePicker(findBoard.getDatePicker())
+                .roomOption(findBoard.getRoomOption())
+                .title(findBoard.getTitle())
+                .build();
+
+        return boardDetailDto;
+    }
+
 //    public List<AddressListDto> findAddress() {
 //        System.out.println("findAddress 실행!!");
 //        List<Board> boardList = boardRepository.findAll();
@@ -207,7 +233,7 @@ public class BoardService {
 
     }
 
-    public String likeBoard(String memberId, Long boardId) {
+    public Boolean likeBoard(String memberId, Long boardId) {
         Member member = memberRepository.findByEmail(memberId).orElseThrow(()
                 -> new RuntimeException("회원을 찾을 수 없습니다."));
         Board board = boardRepository.findById(boardId).orElseThrow(()
@@ -215,7 +241,7 @@ public class BoardService {
 
         if (member.getLikeBoards().stream().anyMatch(likeBoard -> likeBoard.getBoard().equals(board))) {
             likeBoardRepository.deleteByMemberAndBoard(member, board);
-            return "게시글 좋아요 취소";
+            return false;
         } else {
             LikeBoard likeBoard = LikeBoard.builder()
                     .member(member)
@@ -223,7 +249,7 @@ public class BoardService {
                     .build();
 
             likeBoardRepository.save(likeBoard);
-            return "게시글 좋아요";
+            return true;
         }
     }
 
