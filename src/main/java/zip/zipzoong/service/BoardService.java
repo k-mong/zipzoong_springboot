@@ -183,9 +183,9 @@ public class BoardService {
     public BoardDetailDto findBoardDetail(Long id) {
         Board findBoard = boardRepository.findById(id).get();
 
-        String roomImages = findBoard.getRoomImages().stream()
+        List<String> roomImages = findBoard.getRoomImages().stream()
                 .map(RoomImage::getUrl)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.toList());
 
         BoardDetailDto boardDetailDto = BoardDetailDto.builder()
                 .roomImage(roomImages)
@@ -193,12 +193,16 @@ public class BoardService {
                 .rentType(findBoard.getRentType())
                 .deposit(findBoard.getDeposit())
                 .month(findBoard.getMonth())
+                .roomCost(findBoard.getRoomCost())
                 .roomArea(findBoard.getRoomArea())
                 .roomInformation(findBoard.getRoomInfo())
                 .floorsNumber(findBoard.getFloorsNumber())
+                .parking(findBoard.isParking())
+                .parkingCost(findBoard.getParkingCost())
                 .datePicker(findBoard.getDatePicker())
                 .roomOption(findBoard.getRoomOption())
                 .title(findBoard.getTitle())
+                .textArea(findBoard.getTextArea())
                 .build();
 
         return boardDetailDto;

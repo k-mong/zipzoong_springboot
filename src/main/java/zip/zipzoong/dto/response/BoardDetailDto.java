@@ -9,6 +9,7 @@ import zip.zipzoong.domain.entity.RoomImage;
 import zip.zipzoong.domain.entity.RoomInformation;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @Getter
@@ -16,17 +17,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class BoardDetailDto {
 
-    private String roomImage;
+    private List<String> roomImage;
     private Long id;
     private RentType rentType;
     private int deposit;
     private int month;
+    private int roomCost;
     private int roomArea;
     private RoomInformation roomInformation;
     private String floorsNumber;
+    private boolean parking;
+    private int parkingCost;
     private LocalDate datePicker;
     private boolean elevator;
     private String roomOption;
     private String title;
+    private String textArea;
 
 }

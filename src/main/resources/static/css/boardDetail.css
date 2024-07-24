@@ -17,6 +17,9 @@
     justify-content: center;
     border-bottom: 1px solid gray;
     padding: 20px 0;
+    width: 100%;
+    object-fit: cover;
+    height: 400px;
 }
 
 /*Title*/
@@ -132,4 +135,70 @@
     font-weight: bold;
     font-size: 20px;
     margin: 20px 0;
+}
+
+
+
+
+/*이미지 슬라이드*/
+.slider-2 {
+    position: relative;
+    width: 100%; /* 슬라이더의 전체 너비 */
+    /*max-width: 600px; !* 슬라이더의 최대 너비 *!*/
+    margin: 0 auto; /* 가운데 정렬 */
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.slides > div {
+    min-width: 100%;
+    box-sizing: border-box;
+    display: none;
+}
+
+.slides > div.active {
+    display: block;
+}
+
+.page-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.page-nav > div {
+    width: 10px;
+    height: 10px;
+    background: gray;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.page-nav > div.active {
+    background: black;
+}
+
+.side-btns {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+
+.side-btns > .prev-btn,
+.side-btns > .next-btn {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
 }

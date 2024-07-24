@@ -6,22 +6,38 @@
     <link rel="stylesheet" href="../../static/css/boardDetail.css">
 </head>
 <body>
-
+<div id="header"></div>
 <div class="wrapper">
     <div class="detailWrap">
-        <div class="imgWrap">
-            <img alt="roomImg"/>
+<!--        <div class="imgWrap">-->
+<!--            <div th:each="image : ${boardDetail.roomImage}">-->
+<!--                <img th:src="@{'../../static' + ${image}}" alt="roomImg"/>-->
+<!--        </div>-->
+        <div class="imgWrap slider-2">
+            <div class="slides">
+                <div th:each="image, iterStat : ${boardDetail.roomImage}" th:classappend="${iterStat.index == 0} ? 'active'">
+                    <img th:src="@{'../../static' + ${image}}" alt="roomImg"/>
+                </div>
+            </div>
+            <div class="page-nav">
+                <div th:each="image, iterStat : ${boardDetail.roomImage}" th:classappend="${iterStat.index == 0} ? 'active'"></div>
+            </div>
+            <div class="side-btns">
+                <div class="prev-btn">&lt;</div>
+                <div class="next-btn">&gt;</div>
+            </div>
         </div>
+
         <div class="titleWrap">
             <div class="roomCostWrap">
-                <span class="roomNumber" th:text="${boardDetail.getId()}">등록번호 {res.seq}</span>
+                <span class="roomNumber" th:text="'등록번호' + ${boardDetail.getId()}"></span>
                 <div class="costWrap">
-                    <span>원룸 월세 </span>
-                    <span class="cost">
-                        {res.deposit}/{res.month}만원
-                    </span>
+                    <span th:if="${boardDetail.getRentType()} == ${boardDetail.getRentType().MONTH}" th:text="'월세'"></span>
+                    <span th:if="${boardDetail.getRentType()} == ${boardDetail.getRentType().YEAR}" th:text="'전세'"></span>
+                    <span class="cost" th:if="${boardDetail.getRentType()} == ${boardDetail.getRentType().MONTH}" th:text="${boardDetail.getDeposit()} + '/' + ${boardDetail.getMonth()}"></span>
+                    <span class="cost" th:if="${boardDetail.getRentType()} == ${boardDetail.getRentType().YEAR}" th:text="${boardDetail.getDeposit()}"></span>
                 </div>
-                <span>관리비 {res.roomCost}만원</span>
+                <span th:text="'관리비 ' + ${boardDetail.getRoomCost()} + '만원'">관리비 {res.roomCost}만원</span>
             </div>
             <div class="buttonWrap">
                 <button class="chatBtn" className="hover:bg-hover">
@@ -33,65 +49,100 @@
 
 <!--Contents-->
         <div class="contentsWrap">
-            <div class="roomInfo">1.5형 분리형 공간 넓은 잠실 풀옵션 분리형 원룸</div>
+            <div class="roomInfo" th:text="${boardDetail.getTitle()}"></div>
             <div>
                 <div class="infoWrap">
-                    <img alt="roomWidth" />
-                    <span>7평</span>
+                    <img alt="roomWidth" src="../../static/images/평수.png" />
+                    <span th:text="${boardDetail.getRoomArea()} + '평'"></span>
                 </div>
                 <div class="infoWrap">
-                    <img alt="room" />
-                    <span>분리형 원룸</span>
+                    <img alt="room" src="../../static/images/방%20종류.png" />
+                    <span th:if="${boardDetail.getRoomInformation()} == ${boardDetail.getRoomInformation().OPEN}" th:text="'오픈형 원룸'"></span>
+                    <span th:if="${boardDetail.getRoomInformation()} == ${boardDetail.getRoomInformation().DETACHABLE}" th:text="'분리형 원룸'"></span>
+                    <span th:if="${boardDetail.getRoomInformation()} == ${boardDetail.getRoomInformation().LAYER}" th:text="'복층형 원룸'"></span>
                 </div>
                 <div class="infoWrap">
-                    <img alt="floor" />
-                    <span>5층</span>
+                    <img alt="floor" src="../../static/images/층%20수.png"/>
+                    <span th:text="${boardDetail.getFloorsNumber()} + '층'"></span>
                 </div>
                 <div class="infoWrap">
-                    <img alt="parking" />
-                    <span>주차 불가능</span>
+                    <img alt="parking" src="../../static/images/주차가능여부.png"/>
+                    <span th:if="${boardDetail.parking} == false" th:text="'주차 불가능'"></span>
+                    <span th:if="${boardDetail.parking} == true" th:text="'주차 가능 ' + ${boardDetail.parkingCost} + '만원'"></span>
                 </div>
                 <div class="infoWrap">
-                    <img alt="calendar" />
-                    <span>0000.00.00 이후 입주가능</span>
+                    <img alt="calendar" src="../../static/images/달력.png"/>
+                    <span th:text="${boardDetail.getDatePicker()} + ' 이후 입주가능'"></span>
                 </div>
+<!--                <div class="infoWrap">-->
+<!--                    <img alt="direction" />-->
+<!--                    <span>남서향</span>-->
+<!--                </div>-->
                 <div class="infoWrap">
-                    <img alt="direction" />
-                    <span>남서향</span>
-                </div>
-                <div class="infoWrap">
-                    <img alt="elevator" />
-                    <span>엘리베이터 있음</span>
+                    <img alt="elevator" src="../../static/images/엘리베이터.png"/>
+                    <span th:if="${boardDetail.elevator} == true" th:text="'엘리베이터 있음'"></span>
+                    <span th:if="${boardDetail.elevator} == false" th:text="'엘리베이터 없음'"></span>
                 </div>
             </div>
         </div>
 
         <!--Option-->
+<!--        <div class="optionWrap">-->
+<!--            <div class="optionTitle">옵션 정보</div>-->
+<!--            <div class="optionInfoWrap">-->
+<!--                <div class="optionInfo">-->
+<!--                    <img alt="closet" src="../../static/images/집중%20옷장%201.png"/>-->
+<!--                    <span>옷장</span>-->
+<!--                </div>-->
+<!--                <div class="optionInfo">-->
+<!--                    <img alt="refrigerator" src="../../static/images/집중%20냉장고%201.png"/>-->
+<!--                    <span>냉장고</span>-->
+<!--                </div>-->
+<!--                <div class="optionInfo">-->
+<!--                    <img alt="airConditioner" src="../../static/images/집중%20에어컨%201.png"/>-->
+<!--                    <span>에어컨</span>-->
+<!--                </div>-->
+<!--                <div class="optionInfo">-->
+<!--                    <img alt="washing" src="../../static/images/집중%20세탁기%201.png" />-->
+<!--                    <span>세탁기</span>-->
+<!--                </div>-->
+<!--                <div class="optionInfo">-->
+<!--                    <img alt="oven" src="../../static/images/집중%20전자레인지%201.png" />-->
+<!--                    <span>전자레인지</span>-->
+<!--                </div>-->
+<!--                <div class="optionInfo">-->
+<!--                    <img alt="desk" src="../../static/images/집중%20책상%201.png" />-->
+<!--                    <span>책상</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
         <div class="optionWrap">
             <div class="optionTitle">옵션 정보</div>
             <div class="optionInfoWrap">
-                <div class="optionInfo">
-                    <img alt="closet" />
+                <div th:if="${boardDetail.getRoomOption().contains('CLOSET')}" class="optionInfo">
+                    <img alt="closet" src="../../static/images/집중%20옷장%201.png"/>
                     <span>옷장</span>
                 </div>
-                <div class="optionInfo">
-                    <img alt="refrigerator" />
+                <div th:if="${boardDetail.getRoomOption().contains('FRIDGE')}" class="optionInfo">
+                    <img alt="refrigerator" src="../../static/images/집중%20냉장고%201.png"/>
                     <span>냉장고</span>
                 </div>
-                <div class="optionInfo">
-                    <img alt="airConditioner" />
+                <div th:if="${boardDetail.getRoomOption().contains('AIR_CONDITIONER')}" class="optionInfo">
+                    <img alt="airConditioner" src="../../static/images/집중%20에어컨%201.png"/>
                     <span>에어컨</span>
                 </div>
-                <div class="optionInfo">
-                    <img alt="washing" />
+                <div th:if="${boardDetail.getRoomOption().contains('WASHER')}" class="optionInfo">
+                    <img alt="washing" src="../../static/images/집중%20세탁기%201.png" />
                     <span>세탁기</span>
                 </div>
-                <div class="optionInfo">
-                    <img src={oven} alt="oven" />
+                <div th:if="${boardDetail.getRoomOption().contains('OVEN')}" class="optionInfo">
+                    <img alt="oven" src="../../static/images/집중%20전자레인지%201.png" />
                     <span>전자레인지</span>
                 </div>
-                <div class="optionInfo">
-                    <img alt="desk" />
+                <div th:if="${boardDetail.getRoomOption().contains('DESK')}" class="optionInfo">
+                    <img alt="desk" src="../../static/images/집중%20책상%201.png" />
                     <span>책상</span>
                 </div>
             </div>
@@ -100,10 +151,58 @@
 <!--Description-->
         <div>
             <div class="descriptionTitle" className="font-bold text-lg my-7">상세 설명</div>
-            <div>{res.textArea}</div>
+            <div th:text="${boardDetail.getTextArea()}"></div>
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#header").load("/header");
 
+        $('.slider-2 .page-nav > div').click(function() {
+            var $this = $(this);
+            var $pagenav = $this.parent();
+            var $current = $pagenav.find('.active');
+
+            $current.removeClass('active');
+            $this.addClass('active');
+
+            var index = $this.index();
+            var $slider = $this.closest('.slider-2');
+
+            $slider.find('.slides > div.active').removeClass('active');
+            $slider.find('.slides > div').eq(index).addClass('active');
+        });
+
+        $('.slider-2 > .side-btns > div:first-child').click(function() {
+            var $this = $(this);
+            var $slider = $this.closest('.slider-2');
+
+            var $current = $slider.find('.page-nav > div.active');
+            var $post = $current.prev();
+
+            if ($post.length == 0) {
+                $post = $slider.find('.page-nav > div:last-child');
+            }
+
+            $post.click();
+        });
+
+        $('.slider-2 > .side-btns > div:last-child').click(function() {
+            var $this = $(this);
+            var $slider = $this.closest('.slider-2');
+
+            var $current = $slider.find('.page-nav > div.active');
+            var $post = $current.next();
+
+            if ($post.length == 0) {
+                $post = $slider.find('.page-nav > div:first-child');
+            }
+
+            $post.click();
+        });
+    });
+</script>
 </body>
 </html>

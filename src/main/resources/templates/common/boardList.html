@@ -8,11 +8,10 @@
 <body>
 
 <div th:each="board : ${allBoardList}">
-    <div class="wrapper" id="moveBoardDetailBtn">
+    <div class="wrapper" th:data-id="${board.getId()}">
         <div class="imgWrap">
             <img class="roomImg" th:src="@{'../static' + ${board.getRoomImage()}}" alt="img" id="roomImg"/>
         </div>
-        <div th:text="${board.getId()}" hidden="hidden"></div>
         <div class="roomInfoWrap">
             <div class="priceWrap">
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().MONTH}" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
@@ -37,7 +36,7 @@
 <script>
     $(document).ready(function () {
 
-        $('#moveBoardDetailBtn').click(function () {
+        $('.wrapper').click(function () {
             var boardId = $(this).data("id");
             window.location.href = "board/boardDetail/" + boardId;
         })
