@@ -15,7 +15,7 @@ spring:
       client:
         registration:
           kakao:
-            client-id: [요약 정보 탭 > 앱 키 에서 확인 가능한 REST API 키]
+            client-id: 730d986787dcee1364c3d34a82b0139e
             client-secret: [보안 탭에서 확인 가능한 Client Secret 코드]
             scope:
               - profile_nickname
