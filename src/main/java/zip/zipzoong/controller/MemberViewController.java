@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import zip.zipzoong.dto.response.BoardDetailDto;
 import zip.zipzoong.dto.response.BoardListDto;
+import zip.zipzoong.dto.response.LikeBoardListDto;
 import zip.zipzoong.service.BoardService;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class UserViewController {
+public class MemberViewController {
 
     @Autowired
     private BoardService boardService;
@@ -59,6 +60,17 @@ public class UserViewController {
         return "common/boardList";
     }
 
+    @GetMapping("/likeBoardList")
+    public String ShowAllLikeBoardList(Model model) {
+        List<LikeBoardListDto> likeBoardList = boardService.findLikeBoard()
+    }
+
+    @GetMapping("/boardDetail/{id}")
+    public String showBoardDetail(Model model, @PathVariable Long id) {
+        BoardDetailDto boardDetail = boardService.findBoardDetail(id);
+        model.addAttribute("boardDetail", boardDetail);
+        return "common/boardDetail";
+    }
 
     @GetMapping("/createBoard")
     public String createBoard() {

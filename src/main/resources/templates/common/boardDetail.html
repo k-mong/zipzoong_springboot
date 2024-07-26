@@ -9,10 +9,6 @@
 <div id="header"></div>
 <div class="wrapper">
     <div class="detailWrap">
-<!--        <div class="imgWrap">-->
-<!--            <div th:each="image : ${boardDetail.roomImage}">-->
-<!--                <img th:src="@{'../../static' + ${image}}" alt="roomImg"/>-->
-<!--        </div>-->
         <div class="imgWrap slider-2">
             <div class="slides">
                 <div th:each="image, iterStat : ${boardDetail.roomImage}" th:classappend="${iterStat.index == 0} ? 'active'">
@@ -43,7 +39,9 @@
                 <button class="chatBtn" className="hover:bg-hover">
                     채팅하기
                 </button>
-                <button>하트</button>
+                <button class="likeBtn">
+                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>
+                </button>
             </div>
         </div>
 
@@ -74,10 +72,6 @@
                     <img alt="calendar" src="../../static/images/달력.png"/>
                     <span th:text="${boardDetail.getDatePicker()} + ' 이후 입주가능'"></span>
                 </div>
-<!--                <div class="infoWrap">-->
-<!--                    <img alt="direction" />-->
-<!--                    <span>남서향</span>-->
-<!--                </div>-->
                 <div class="infoWrap">
                     <img alt="elevator" src="../../static/images/엘리베이터.png"/>
                     <span th:if="${boardDetail.elevator} == true" th:text="'엘리베이터 있음'"></span>
@@ -87,37 +81,6 @@
         </div>
 
         <!--Option-->
-<!--        <div class="optionWrap">-->
-<!--            <div class="optionTitle">옵션 정보</div>-->
-<!--            <div class="optionInfoWrap">-->
-<!--                <div class="optionInfo">-->
-<!--                    <img alt="closet" src="../../static/images/집중%20옷장%201.png"/>-->
-<!--                    <span>옷장</span>-->
-<!--                </div>-->
-<!--                <div class="optionInfo">-->
-<!--                    <img alt="refrigerator" src="../../static/images/집중%20냉장고%201.png"/>-->
-<!--                    <span>냉장고</span>-->
-<!--                </div>-->
-<!--                <div class="optionInfo">-->
-<!--                    <img alt="airConditioner" src="../../static/images/집중%20에어컨%201.png"/>-->
-<!--                    <span>에어컨</span>-->
-<!--                </div>-->
-<!--                <div class="optionInfo">-->
-<!--                    <img alt="washing" src="../../static/images/집중%20세탁기%201.png" />-->
-<!--                    <span>세탁기</span>-->
-<!--                </div>-->
-<!--                <div class="optionInfo">-->
-<!--                    <img alt="oven" src="../../static/images/집중%20전자레인지%201.png" />-->
-<!--                    <span>전자레인지</span>-->
-<!--                </div>-->
-<!--                <div class="optionInfo">-->
-<!--                    <img alt="desk" src="../../static/images/집중%20책상%201.png" />-->
-<!--                    <span>책상</span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
         <div class="optionWrap">
             <div class="optionTitle">옵션 정보</div>
             <div class="optionInfoWrap">
@@ -158,8 +121,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        // header 불러오기
         $("#header").load("/header");
 
+        // 이미지 슬라이드
         $('.slider-2 .page-nav > div').click(function() {
             var $this = $(this);
             var $pagenav = $this.parent();
@@ -202,6 +167,23 @@
 
             $post.click();
         });
+
+        // 로그인 유저만
+        $(".chatBtn").click(function () {
+            var memberNick = $("#memberNick").val();
+            if (!memberNick) {
+                alert("로그인 후 이용가능합니다.");
+            }
+        });
+
+        $(".likeBtn").click(function () {
+            var memberNick = $("#memberNick").val();
+            if (!memberNick) {
+                alert("로그인 후 이용가능합니다.");
+            }
+        });
+
+
     });
 </script>
 </body>

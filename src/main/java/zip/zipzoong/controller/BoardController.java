@@ -44,14 +44,6 @@ public class BoardController {
         return ResponseEntity.ok(result + newAccessToken);
     }
 
-//    @GetMapping("/addressList")
-//    public ResponseEntity<List<AddressListDto>> addressList() {
-//        System.out.println("controller addressList 실행");
-//        List<AddressListDto> addressList = boardService.findAddress();
-//        System.out.println("addressList = " + addressList);
-//        return ResponseEntity.ok(addressList);
-//    }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBoard(@PathVariable Long id,
                                               @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {

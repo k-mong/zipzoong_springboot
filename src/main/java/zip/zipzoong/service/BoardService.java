@@ -2,7 +2,6 @@ package zip.zipzoong.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,9 +15,9 @@ import zip.zipzoong.domain.repository.MemberRepository;
 import zip.zipzoong.domain.repository.RoomImageRepository;
 import zip.zipzoong.dto.BoardImgForm;
 import zip.zipzoong.dto.InsertBoardDto;
-import zip.zipzoong.dto.response.AddressListDto;
 import zip.zipzoong.dto.response.BoardDetailDto;
 import zip.zipzoong.dto.response.BoardListDto;
+import zip.zipzoong.dto.response.LikeBoardListDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -208,22 +207,6 @@ public class BoardService {
         return boardDetailDto;
     }
 
-//    public List<AddressListDto> findAddress() {
-//        System.out.println("findAddress 실행!!");
-//        List<Board> boardList = boardRepository.findAll();
-//        List<AddressListDto> addressListDtos = new ArrayList<>();
-//        for (Board board : boardList) {
-//            AddressListDto addressListDto = AddressListDto.builder()
-//                    .address(board.getAddress())
-//                    .build();
-//
-//            addressListDtos.add(addressListDto);
-//
-//            System.out.println(addressListDto);
-//        }
-//        return addressListDtos;
-//    }
-
     public String deleteBoard(Long boardId, String memberId) {
         Member findMember = memberRepository.findByEmail((memberId))
                 .orElseThrow(()-> new RuntimeException("존재하지 않는 회원입니다."));
@@ -255,6 +238,25 @@ public class BoardService {
             likeBoardRepository.save(likeBoard);
             return true;
         }
+    }
+
+    public List<LikeBoardListDto> findLikeBoard(String memberId) {
+        Member member = memberRepository.findByEmail(memberId).orElseThrow(()
+                -> new RuntimeException("회원을 찾을 수 없습니다."));
+
+        List<LikeBoard> likeBoards = likeBoardRepository.findLikeBoard(member);
+        List<LikeBoardListDto>likeBoardListDtos = new ArrayList<>();
+
+        for(LikeBoard likeBoard : likeBoards) {
+            LikeBoardListDto likeBoardListDto = LikeBoardListDto.builder()
+                    .memberId(String.valueOf(likeBoard.getMember()))
+                    .BoardId(likeBoard.getBoard().getId())
+                    .build();
+
+            likeBoardListDtos.add(likeBoardListDto);
+        }
+
+        return likeBoardListDtos;
     }
 
 

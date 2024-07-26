@@ -16,10 +16,10 @@
             <div class="priceWrap">
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().MONTH}" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().YEAR}" th:text="'전세 ' + ${board.getDeposit()}"></div>
-                <div class="heartWrap" id="heartWrap">
-                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>
-                    <img src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>
-                </div>
+<!--                <div class="heartWrap" id="heartWrap">-->
+<!--                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>-->
+<!--                    <img src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>-->
+<!--                </div>-->
             </div>
             <div class="floorInfo">
                 <div class="mr-7" th:text="${board.getFloorsNumber()} + '층'"></div>
@@ -41,30 +41,6 @@
             window.location.href = "board/boardDetail/" + boardId;
         })
 
-        $(".unlikeBtn").hide(); // 빨간 하트 숨기기(기본은 흰 하트)
-
-        $(".heartWrap").click(function () {
-            var likeBtn = $(this).find(".likeBtn");
-            var unlikeBtn = $(this).find(".unlikeBtn");
-
-            if (unlikeBtn.is(":hidden")) {  // 흰 하트가 숨겨져 있다면
-                $.ajax({
-                    type: 'POST',
-                    url: `member/like`,
-                    dataType: 'json'
-                })
-                likeBtn.hide();
-                unlikeBtn.show();
-            } else {
-                $.ajax({
-                    type: 'DELETE',
-                    url: 'member/like',
-                    dataType: 'json'
-                })
-                likeBtn.show();
-                unlikeBtn.hide();
-            }
-        });
     });
 
 </script>

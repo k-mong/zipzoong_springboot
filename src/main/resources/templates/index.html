@@ -63,6 +63,45 @@
     //     });
     // });
 
+    // $("#header").load("/header", function() {
+    //
+    //     $("#allBoardList").load("/allBoardList", function() {
+    //         // allBoardList 로드가 완료된 후 실행되는 코드
+    //         var mapContainer = document.getElementById('map'); // 지도를 표시할 div
+    //         var mapOption = {
+    //             center: new kakao.maps.LatLng(37.5665, 126.9780), // 지도의 중심좌표
+    //             level: 5 // 지도의 확대 레벨
+    //         };
+    //
+    //         // Kakao 지도 API를 비동기적으로 로드
+    //         var script = document.createElement('script');
+    //         script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=b7d2b17b0b31f160b34d7bf533c7e9fb&libraries=services';
+    //         document.head.appendChild(script);
+    //
+    //         // Kakao 지도 가 생성되면 실행
+    //         script.onload = function() {
+    //             // 지도 생성
+    //             var map = new kakao.maps.Map(mapContainer, mapOption);
+    //             var geocoder = new kakao.maps.services.Geocoder();
+    //
+    //             // boardList의 addressInfo 를 통해 마커 생성
+    //             $(".addressInfo").each(function() {
+    //                 var address = $(this).text();
+    //                 geocoder.addressSearch(address, function(result, status) {
+    //                     if (status === kakao.maps.services.Status.OK) {
+    //                         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    //                         var marker = new kakao.maps.Marker({
+    //                             map: map,
+    //                             position: coords
+    //                         });
+    //                     }
+    //                 });
+    //             });
+    //         };
+    //     });
+    // });
+
+
     $("#header").load("/header", function() {
 
         $("#allBoardList").load("/allBoardList", function() {
@@ -78,21 +117,40 @@
             script.src = '//dapi.kakao.com/v2/maps/sdk.js?appkey=b7d2b17b0b31f160b34d7bf533c7e9fb&libraries=services';
             document.head.appendChild(script);
 
-            // Kakao 지도 가 생성되면 실행
+            // Kakao 지도 API 스크립트가 로드되면 실행되는 함수
             script.onload = function() {
                 // 지도 생성
                 var map = new kakao.maps.Map(mapContainer, mapOption);
                 var geocoder = new kakao.maps.services.Geocoder();
 
+                var markers = [];
+
                 // boardList의 addressInfo 를 통해 마커 생성
-                $(".addressInfo").each(function() {
+                $(".addressInfo").each(function(index) {
                     var address = $(this).text();
+                    var boardElement = $(this).closest('.wrapper'); // 게시글 요소를 가져옴
+
                     geocoder.addressSearch(address, function(result, status) {
                         if (status === kakao.maps.services.Status.OK) {
                             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
                             var marker = new kakao.maps.Marker({
                                 map: map,
                                 position: coords
+                            });
+
+                            // 마커와 게시글 요소를 연결
+                            marker.boardElement = boardElement;
+                            markers.push(marker);
+
+                            // 마우스가 게시글에 올려졌을 때
+                            boardElement.hover(function() {
+                                marker.setImage(new kakao.maps.MarkerImage(
+                                    'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+                                    new kakao.maps.Size(24, 35)
+                                ));
+                            }, function() {
+                                // 마우스가 게시글에서 벗어났을 때
+                                marker.setImage(null); // 기본 마커 이미지로 변경
                             });
                         }
                     });
