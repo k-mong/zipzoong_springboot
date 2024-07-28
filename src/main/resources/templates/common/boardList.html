@@ -16,10 +16,10 @@
             <div class="priceWrap">
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().MONTH}" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().YEAR}" th:text="'전세 ' + ${board.getDeposit()}"></div>
-<!--                <div class="heartWrap" id="heartWrap">-->
-<!--                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>-->
-<!--                    <img src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>-->
-<!--                </div>-->
+                <div th:each="likeBoard : ${likeBoardList}" class="heartWrap" id="heartWrap">
+                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>
+                    <img th:if="likeBoard == null" th:src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>
+                </div>
             </div>
             <div class="floorInfo">
                 <div class="mr-7" th:text="${board.getFloorsNumber()} + '층'"></div>
@@ -39,8 +39,36 @@
         $('.wrapper').click(function () {
             var boardId = $(this).data("id");
             window.location.href = "board/boardDetail/" + boardId;
-        })
+        });
 
+        $('.likeBtn').click(function(event) {
+            event.stopPropagation();
+            var boardId = $(this).closest('.wrapper').data("id");
+            var refreshToken = localStorage.getItem("refreshToken");
+            var token = localStorage.getItem("token");
+
+
+            if (!token || !refreshToken) {
+                alert("로그인 후 이용 가능합니다.");
+                return;
+            }
+
+            $.ajax({
+                url: "/like/" + boardId,
+                type: "POST",
+                headers: {
+                    "X-AUTH-REFRESHTOKEN": refreshToken,
+                    "X-AUTH-TOKEN": token
+                },
+                success: function(response) {
+                    alert("좋아요가 반영되었습니다: " + response);
+                    // 여기서 하트 이미지를 변경하거나 UI 업데이트를 할 수 있습니다.
+                },
+                error: function(status, error) {
+                    alert("좋아요 처리에 실패했습니다.");
+                }
+            });
+        });
     });
 
 </script>

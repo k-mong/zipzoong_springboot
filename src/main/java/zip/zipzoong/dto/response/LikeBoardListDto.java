@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LikeBoardListDto {
     private String memberId;
-    private Long BoardId;
+    private Long boardId;
 }

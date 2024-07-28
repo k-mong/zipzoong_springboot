@@ -244,13 +244,13 @@ public class BoardService {
         Member member = memberRepository.findByEmail(memberId).orElseThrow(()
                 -> new RuntimeException("회원을 찾을 수 없습니다."));
 
-        List<LikeBoard> likeBoards = likeBoardRepository.findLikeBoard(member);
+        List<LikeBoard> likeBoards = likeBoardRepository.findByMember(member);
         List<LikeBoardListDto>likeBoardListDtos = new ArrayList<>();
 
         for(LikeBoard likeBoard : likeBoards) {
             LikeBoardListDto likeBoardListDto = LikeBoardListDto.builder()
-                    .memberId(String.valueOf(likeBoard.getMember()))
-                    .BoardId(likeBoard.getBoard().getId())
+                    .memberId(likeBoard.getMember().getEmail())
+                    .boardId(likeBoard.getBoard().getId())
                     .build();
 
             likeBoardListDtos.add(likeBoardListDto);

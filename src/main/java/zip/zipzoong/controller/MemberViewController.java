@@ -3,14 +3,17 @@ package zip.zipzoong.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import zip.zipzoong.dto.response.BoardDetailDto;
 import zip.zipzoong.dto.response.BoardListDto;
 import zip.zipzoong.dto.response.LikeBoardListDto;
+import zip.zipzoong.security.TokenProvider;
 import zip.zipzoong.service.BoardService;
 
 import java.util.List;
@@ -21,6 +24,8 @@ public class MemberViewController {
 
     @Autowired
     private BoardService boardService;
+    @Autowired
+    private TokenProvider tokenProvider;
 
     @GetMapping("/login")
     public String showLogin() {
@@ -61,8 +66,17 @@ public class MemberViewController {
     }
 
     @GetMapping("/likeBoardList")
-    public String ShowAllLikeBoardList(Model model) {
-        List<LikeBoardListDto> likeBoardList = boardService.findLikeBoard()
+    public String ShowAllLikeBoardList(Model model,
+                                       @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
+        String newAccessToken = token; // 기본적으로는 받은 액세스 토큰을 사용
+        if(!tokenProvider.checkValidToken(token)){  // 액세스토큰이 만료되면 리프레시토큰을 검사해서 유효한지 체크
+            newAccessToken = tokenProvider.checkRefreshToken(refreshToken);
+        }
+
+        String memberId = tokenProvider.getUserId(newAccessToken);
+        List<LikeBoardListDto> likeBoardList = boardService.findLikeBoard(memberId);
+        model.addAttribute("likeBoardList", likeBoardList);
+        return "common/boardList";
     }
 
     @GetMapping("/boardDetail/{id}")

@@ -10,5 +10,5 @@ import java.util.List;
 public interface LikeBoardRepository extends JpaRepository<LikeBoard, Long> {
 
     void deleteByMemberAndBoard(Member member, Board board);
-    List<LikeBoard> findLikeBoard(Member member);
+    List<LikeBoard> findByMember(Member member);
 }
