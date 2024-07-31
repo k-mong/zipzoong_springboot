@@ -16,9 +16,11 @@
             <div class="priceWrap">
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().MONTH}" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().YEAR}" th:text="'전세 ' + ${board.getDeposit()}"></div>
-                <div th:each="likeBoard : ${likeBoardList}" class="heartWrap" id="heartWrap">
-                    <img src="../../static/images/하트.png" id="likeBtn" class="likeBtn"/>
-                    <img th:if="likeBoard == null" th:src="../../static/images/좋아요.png" id="unlikeBtn" class="unlikeBtn"/>
+                <div class="heartWrap" id="heartWrap">
+                    <div th:each="likeBoard : ${likeBoardList}">
+                        <img th:if="${likeBoard.getBoardId() == board.getId()}" th:src="@{../../static/images/좋아요.png}" id="unlikeBtn" class="unlikeBtn" alt="unlikeBtn"/>
+                        <img th:if="${likeBoard.getBoardId() != board.getId()}" th:src="@{../../static/images/하트.png}" id="likeBtn" class="likeBtn" alt="likeBtn"/>
+                    </div>
                 </div>
             </div>
             <div class="floorInfo">
@@ -61,7 +63,8 @@
                     "X-AUTH-TOKEN": token
                 },
                 success: function(response) {
-                    alert("좋아요가 반영되었습니다: " + response);
+                    alert("게시글 좋아요 " + response);
+                    location.reload();
 
                 },
                 error: function(status, error) {
