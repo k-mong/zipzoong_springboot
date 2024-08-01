@@ -50,7 +50,6 @@
             success: function(response) {
 
                 if (response.result === '로그인 성공!') {
-                    // 토큰을 로컬 스토리지에 저장
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('refreshToken', response.refreshToken);
 

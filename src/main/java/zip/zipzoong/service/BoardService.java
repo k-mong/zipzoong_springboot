@@ -142,12 +142,59 @@ public class BoardService {
     }
 
 
-    public List<BoardListDto> findAllBoardList() {
+//    public List<BoardListDto> findAllBoardList() {
+//        List<Board> boardList = boardRepository.findAll();
+//        List<BoardListDto> boardListDtos = new ArrayList<>();
+//
+//        for (Board board : boardList) {
+//            String roomImage = board.getRoomImages().get(0).getUrl();
+//            BoardListDto boardListDto = BoardListDto.builder()
+//                    .id(board.getId())
+//                    .rentType(board.getRentType())
+//                    .roomImage(roomImage)
+//                    .deposit(board.getDeposit())
+//                    .month(board.getMonth())
+//                    .floorsNumber(board.getFloorsNumber())
+//                    .address(board.getAddress())
+//                    .title(board.getTitle())
+//                    .roomArea(board.getRoomArea())
+//                    .build();
+//
+//            boardListDtos.add(boardListDto);
+//
+//            System.out.println("id" + board.getId());
+//            System.out.println("rentType" + board.getRentType());
+//            System.out.println("roomImage" + roomImage);
+//            System.out.println("floorsNumber" + board.getFloorsNumber());
+//            System.out.println("deposit" + board.getDeposit());
+//            System.out.println("month" + board.getMonth());
+//            System.out.println("title" + board.getTitle());
+//            System.out.println("address" + board.getAddress());
+//            System.out.println("roomArea" + board.getRoomArea());
+//        }
+//
+//
+//
+//        return boardListDtos;
+//
+//    }
+
+    public List<BoardListDto> findAllBoardList(String memberId) {
         List<Board> boardList = boardRepository.findAll();
         List<BoardListDto> boardListDtos = new ArrayList<>();
+        List<LikeBoard> likeBoards = new ArrayList<>();
+
+        // 사용자가 로그인한 경우 좋아요 데이터를 가져옴
+        if (memberId != null && !memberId.isEmpty()) {
+            Member member = memberRepository.findByEmail(memberId).orElseThrow(() ->
+                    new RuntimeException("회원을 찾을 수 없습니다."));
+            likeBoards = likeBoardRepository.findByMember(member);
+        }
 
         for (Board board : boardList) {
             String roomImage = board.getRoomImages().get(0).getUrl();
+            boolean liked = likeBoards.stream().anyMatch(likeBoard -> likeBoard.getBoard().equals(board));
+
             BoardListDto boardListDto = BoardListDto.builder()
                     .id(board.getId())
                     .rentType(board.getRentType())
@@ -158,6 +205,7 @@ public class BoardService {
                     .address(board.getAddress())
                     .title(board.getTitle())
                     .roomArea(board.getRoomArea())
+                    .likeBoard(liked)
                     .build();
 
             boardListDtos.add(boardListDto);
@@ -171,12 +219,10 @@ public class BoardService {
             System.out.println("title" + board.getTitle());
             System.out.println("address" + board.getAddress());
             System.out.println("roomArea" + board.getRoomArea());
+            System.out.println("liked" + liked);
         }
 
-
-
         return boardListDtos;
-
     }
 
     public BoardDetailDto findBoardDetail(Long id) {
@@ -220,24 +266,49 @@ public class BoardService {
 
     }
 
-    public Boolean likeBoard(String memberId, Long boardId) {
+    @Transactional
+    public String likeBoard(String memberId, Long boardId) {
         Member member = memberRepository.findByEmail(memberId).orElseThrow(()
                 -> new RuntimeException("회원을 찾을 수 없습니다."));
         Board board = boardRepository.findById(boardId).orElseThrow(()
                 -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        if (member.getLikeBoards().stream().anyMatch(likeBoard -> likeBoard.getBoard().equals(board))) {
-            likeBoardRepository.deleteByMemberAndBoard(member, board);
-            return false;
-        } else {
+        System.out.println("service likeBoard 실행!!");
+        System.out.println("member = " + member);
+        System.out.println("board = " + board);
+
+
             LikeBoard likeBoard = LikeBoard.builder()
                     .member(member)
                     .board(board)
                     .build();
 
+            System.out.println("likeBoard.getMember() = " + likeBoard.getMember());
+            System.out.println("likeBoard.getBoard() = " + likeBoard.getBoard());
+
             likeBoardRepository.save(likeBoard);
-            return true;
-        }
+            return "게시글 좋아요";
+    }
+
+
+    @Transactional
+    public String unlikeBoard(String memberId, Long boardId) {
+        Member member = memberRepository.findByEmail(memberId).orElseThrow(()
+                -> new RuntimeException("회원을 찾을 수 없습니다."));
+        Board board = boardRepository.findById(boardId).orElseThrow(()
+                -> new RuntimeException("게시글을 찾을 수 없습니다."));
+
+        System.out.println("service unlikeBoard 실행!!");
+        System.out.println("member = " + member);
+        System.out.println("board = " + board);
+
+        LikeBoard likeBoard = likeBoardRepository.findByMemberAndBoard(member, board)
+                .orElseThrow(() -> new RuntimeException("좋아요 취소 할 게시물을 찾을 수 없습니다."));
+
+            likeBoardRepository.delete(likeBoard);
+
+        return "게시글 좋아요 취소";
+
     }
 
     public List<LikeBoardListDto> findLikeBoard(String memberId) {

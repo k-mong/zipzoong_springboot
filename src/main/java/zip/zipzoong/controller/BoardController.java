@@ -64,6 +64,7 @@ public class BoardController {
     @PostMapping("/like/{id}")
     public ResponseEntity<String> likeBoard(@PathVariable Long id,
                                             @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
+        System.out.println("likeBoard Controller 실행!!");
         String newAccessToken = token;
         if(!tokenProvider.checkValidToken(token)){
             newAccessToken = tokenProvider.checkRefreshToken(refreshToken);
@@ -75,6 +76,28 @@ public class BoardController {
         String memberId = tokenProvider.getUserId(newAccessToken);
 
         String result = String.valueOf(boardService.likeBoard(memberId, id));
+
+        System.out.println("controller result = " + result);
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/unlike/{id}")
+    public ResponseEntity<String> unlikeBoard(@PathVariable Long id,
+                                            @RequestHeader(name = "X-AUTH-REFRESHTOKEN") String refreshToken, @RequestHeader(name = "X-AUTH-TOKEN") String token) {
+        System.out.println("unlikeBoard Controller 실행!!");
+        String newAccessToken = token;
+        if(!tokenProvider.checkValidToken(token)){
+            newAccessToken = tokenProvider.checkRefreshToken(refreshToken);
+            if(newAccessToken == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("토큰이 만료되었습니다.");
+            }
+        }
+
+        String memberId = tokenProvider.getUserId(newAccessToken);
+
+        String result = String.valueOf(boardService.unlikeBoard(memberId, id));
+
+        System.out.println("controller result = " + result);
         return ResponseEntity.ok(result);
     }
 

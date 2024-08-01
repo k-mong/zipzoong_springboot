@@ -16,11 +16,16 @@
             <div class="priceWrap">
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().MONTH}" th:text="'월세 ' + ${board.getDeposit()} + '/' + ${board.getMonth()}"></div>
                 <div class="price" th:if="${board.getRentType()} == ${board.getRentType().YEAR}" th:text="'전세 ' + ${board.getDeposit()}"></div>
-                <div class="heartWrap" id="heartWrap">
-                    <div th:each="likeBoard : ${likeBoardList}">
-                        <img th:if="${likeBoard.getBoardId() == board.getId()}" th:src="@{../../static/images/좋아요.png}" id="unlikeBtn" class="unlikeBtn" alt="unlikeBtn"/>
-                        <img th:if="${likeBoard.getBoardId() != board.getId()}" th:src="@{../../static/images/하트.png}" id="likeBtn" class="likeBtn" alt="likeBtn"/>
-                    </div>
+<!--                <div class="heartWrap" id="heartWrap">-->
+<!--                    <div th:each="likeBoard : ${likeBoardList}">-->
+<!--                        <img th:if="${likeBoard.getBoardId()} == ${board.getId()}" th:src="@{../static/images/좋아요.png}" id="unlikeBtn" class="unlikeBtn" alt="unlikeBtn"/>-->
+<!--                        <img th:if="${likeBoard.getBoardId()} != ${board.getId()}" th:src="@{../static/images/하트.png}" id="likeBtn" class="likeBtn" alt="likeBtn"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="heartWrap" id="heartWrap" th:if="${board.isLikeBoard() != null}">
+                    <img th:if="${board.isLikeBoard()} == true" th:src="@{../static/images/좋아요.png}" class="unlikeBtn" alt="unlikeBtn"/>
+                    <img th:unless="${board.isLikeBoard()}" th:src="@{../static/images/하트.png}" class="likeBtn" alt="likeBtn"/>
                 </div>
             </div>
             <div class="floorInfo">
@@ -36,6 +41,44 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // $(document).ready(function () {
+    //
+    //     $('.wrapper').click(function () {
+    //         var boardId = $(this).data("id");
+    //         window.location.href = "board/boardDetail/" + boardId;
+    //     });
+    //
+    //     $('.likeBtn').click(function(event) {
+    //         event.stopPropagation();
+    //         var boardId = $(this).closest('.wrapper').data("id");
+    //         var refreshToken = localStorage.getItem("refreshToken");
+    //         var token = localStorage.getItem("token");
+    //
+    //
+    //         if (!token || !refreshToken) {
+    //             alert("로그인 후 이용 가능합니다.");
+    //             return;
+    //         }
+    //
+    //         $.ajax({
+    //             url: "/like/" + boardId,
+    //             type: "POST",
+    //             headers: {
+    //                 "X-AUTH-REFRESHTOKEN": refreshToken,
+    //                 "X-AUTH-TOKEN": token
+    //             },
+    //             success: function(response) {
+    //                 alert("게시글 좋아요 " + response);
+    //                 location.reload();
+    //
+    //             },
+    //             error: function(status, error) {
+    //                 alert("좋아요 처리에 실패했습니다.");
+    //             }
+    //         });
+    //     });
+    // });
+
     $(document).ready(function () {
 
         $('.wrapper').click(function () {
@@ -45,10 +88,10 @@
 
         $('.likeBtn').click(function(event) {
             event.stopPropagation();
-            var boardId = $(this).closest('.wrapper').data("id");
+            var $this = $(this);
+            var boardId = $this.closest('.wrapper').data("id");
             var refreshToken = localStorage.getItem("refreshToken");
             var token = localStorage.getItem("token");
-
 
             if (!token || !refreshToken) {
                 alert("로그인 후 이용 가능합니다.");
@@ -56,24 +99,55 @@
             }
 
             $.ajax({
-                url: "/like/" + boardId,
+                url: "/board/like/" + boardId,
                 type: "POST",
                 headers: {
                     "X-AUTH-REFRESHTOKEN": refreshToken,
                     "X-AUTH-TOKEN": token
                 },
                 success: function(response) {
-                    alert("게시글 좋아요 " + response);
-                    location.reload();
-
+                    if ($this.attr('src').includes('하트.png')) {
+                        $this.attr('src', '../../static/images/좋아요.png');
+                    }
+                    alert("게시글 좋아요");
                 },
                 error: function(status, error) {
                     alert("좋아요 처리에 실패했습니다.");
                 }
             });
         });
-    });
 
+        $('.unlikeBtn').click(function(event) {
+            event.stopPropagation();
+            var $this = $(this);
+            var boardId = $this.closest('.wrapper').data("id");
+            var refreshToken = localStorage.getItem("refreshToken");
+            var token = localStorage.getItem("token");
+
+            if (!token || !refreshToken) {
+                alert("로그인 후 이용 가능합니다.");
+                return;
+            }
+
+            $.ajax({
+                url: "/board/unlike/" + boardId,
+                type: "DELETE",
+                headers: {
+                    "X-AUTH-REFRESHTOKEN": refreshToken,
+                    "X-AUTH-TOKEN": token
+                },
+                success: function(response) {
+                    if ($this.attr('src').includes('좋아요.png')) {
+                        $this.attr('src', '../../static/images/하트.png');
+                    }
+                    alert("게시글 좋아요 취소");
+                },
+                error: function(status, error) {
+                    alert("좋아요 취소 처리에 실패했습니다.");
+                }
+            });
+        });
+    });
 </script>
 </body>
 </html>

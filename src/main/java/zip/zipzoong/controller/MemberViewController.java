@@ -56,11 +56,31 @@ public class MemberViewController {
         return "common/header";
     }
 
+//    @GetMapping("/allBoardList")
+//    public String showAllBoardList(Model model) {
+//        System.out.println("allboardList실행!");
+//        List<BoardListDto> allBoardList = boardService.findAllBoardList();
+//        System.out.println("allBoardList = " + allBoardList);
+//        model.addAttribute("allBoardList", allBoardList);
+//        return "common/boardList";
+//    }
+
     @GetMapping("/allBoardList")
-    public String showAllBoardList(Model model) {
-        System.out.println("allboardList실행!");
-        List<BoardListDto> allBoardList = boardService.findAllBoardList();
-        System.out.println("allBoardList = " + allBoardList);
+    public String showAllBoardList(Model model,
+                                   @RequestHeader(name = "X-AUTH-REFRESHTOKEN", required = false) String refreshToken,
+                                   @RequestHeader(name = "X-AUTH-TOKEN", required = false) String token) {
+        String newAccessToken = token; // 기본적으로는 받은 액세스 토큰을 사용
+        String memberId = null;
+
+        if (token != null && !tokenProvider.checkValidToken(token)) {  // 액세스토큰이 만료되면 리프레시토큰을 검사해서 유효한지 체크
+            newAccessToken = tokenProvider.checkRefreshToken(refreshToken);
+        }
+
+        if (newAccessToken != null) {
+            memberId = tokenProvider.getUserId(newAccessToken);
+        }
+
+        List<BoardListDto> allBoardList = boardService.findAllBoardList(memberId);
         model.addAttribute("allBoardList", allBoardList);
         return "common/boardList";
     }

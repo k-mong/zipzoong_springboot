@@ -20,4 +20,5 @@ public class BoardListDto {
     private String address;
     private String title;
     private int roomArea;
+    private boolean likeBoard;
 }
